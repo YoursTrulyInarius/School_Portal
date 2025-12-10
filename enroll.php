@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-row">
             <div class="form-group">
                 <label>First Name *</label>
-                <input type="text" name="firstname" required>
+                <input type="text" name="firstname" required placeholder="Enter first name">
             </div>
             <div class="form-group">
                 <label>Last Name *</label>
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="form-group">
             <label>Contact Number</label>
-            <input type="text" name="contact_number" placeholder="09XX-XXX-XXXX">
+            <input type="number" name="contact_number" placeholder="09XX-XXX-XXXX">
         </div>
 
         <div class="form-group">

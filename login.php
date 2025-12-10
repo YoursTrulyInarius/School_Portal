@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Westprime Horizon</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css?v=<?php echo time(); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Poppins', sans-serif; }</style>
 </head>
@@ -66,6 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     <div class="auth-panel">
         <div class="auth-box">
+            <div class="mobile-logo-wrapper">
+                <img src="<?php echo BASE_URL; ?>logo.jpg" alt="Logo" class="mobile-logo">
+            </div>
             <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 30px; font-weight: 700;">Sign In</h2>
             
             <?php if ($msg): ?>

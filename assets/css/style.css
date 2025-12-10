@@ -111,6 +111,28 @@ a:hover {
 }
 
 /* ===================== */
+/* MOBILE LOGO           */
+/* ===================== */
+.mobile-logo-wrapper {
+    display: none !important;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.mobile-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 0 auto;
+}
+
+/* ===================== */
 /* AUTH LAYOUT           */
 /* ===================== */
 .auth-wrapper {
@@ -160,7 +182,7 @@ a:hover {
 }
 
 .auth-sidebar-logo {
-    width: 150px;
+    width: 300px;
     height: auto;
     background: white;
     border-radius: 50%;
@@ -178,18 +200,17 @@ a:hover {
 .auth-panel {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     background-color: white;
     padding: 30px;
-    overflow-y: auto;
+    min-height: 100vh;
 }
 
 .auth-box {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     margin: auto;
-    padding: 20px;
+    padding: 30px 20px;
 }
 
 .auth-box h2 {
@@ -546,6 +567,10 @@ tr:hover td {
     .auth-panel {
         flex: 1;
     }
+
+    .mobile-logo-wrapper {
+        display: flex !important;
+    }
 }
 
 /* ===================== */
@@ -572,6 +597,10 @@ tr:hover td {
     .main-content {
         margin-left: 0;
         padding: 75px 16px 20px 16px;
+    }
+
+    .auth-panel {
+        padding: 20px;
     }
 
     /* Welcome header */

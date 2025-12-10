@@ -83,7 +83,7 @@ $schedules = $conn->query($schedules_sql);
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
             <h2 style="margin: 0; color: var(--primary-color);">Teacher Profile</h2>
             <a href="users.php" class="btn" style="background: #6c757d; font-size: 0.9rem;">&larr; Back to Users</a>
-        </div>
+        </div> 
 
         <div class="profile-header">
             <div style="display: flex; align-items: center; gap: 20px;">
