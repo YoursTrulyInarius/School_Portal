@@ -123,7 +123,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="text" name="contact_number" class="form-control" maxlength="11" minlength="11" pattern="[0-9]{11}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" required placeholder="09123456789" title="Please enter exactly 11 digits">
+                    <input type="text" name="contact_number" class="form-control" maxlength="11" inputmode="numeric" 
+                           onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '').substr(0, 11)"
+                           required placeholder="09123456789" title="Please enter exactly 11 numbers">
                 </div>
 
                 <div class="form-group">
@@ -139,7 +142,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label>Role</label>
                     <select name="role" class="form-control">
-                        <option value="student">Student</option>
                         <option value="teacher">Teacher</option>
                         <option value="admin">Admin</option>
                     </select>
