@@ -5,7 +5,11 @@ A comprehensive web-based school management system built with PHP and MySQL. Thi
 ## Features
 
 ### 🔑 Authentication & Security
+<<<<<<< HEAD
 - **Secure Login & Registration**: Role-based access control.s
+=======
+- **Secure Login & Registration**: Role-based access control.
+>>>>>>> bd5ba2ac2a816959d4bdd69097cbbf9b02c4fff7
 - **Forgot Password**: OTP-based password reset via email.
 - **Admin Setup**: Script to quickly initialize or reset admin access.
 
