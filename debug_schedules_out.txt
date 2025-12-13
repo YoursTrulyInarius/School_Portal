@@ -1,0 +1,11 @@
+Columns in 'schedules' table:
+id - int(11)
+section_id - int(11)
+teacher_id - int(11)
+course_id - int(11)
+subject - varchar(255)
+room - varchar(50)
+day - varchar(20)
+time - varchar(100)
+section_name - varchar(100)
+strand_id - int(11)

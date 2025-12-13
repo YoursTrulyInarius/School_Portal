@@ -1,0 +1,16 @@
+--- Debugging Student Schedules ---
+
+1. Students and their Sections:
+Student: Queenie Venus Cabardo | Section: ''
+Student: Mel Ca | Section: ''
+Student: Sonjeev Cabardo | Section: 'BSIT 2-C'
+
+2. Sections in Schedules Table:
+Section in Schedule: '' (Count: 2)
+Section in Schedule: 'BSIT 1A' (Count: 1)
+Section in Schedule: 'BSIT 2C' (Count: 2)
+
+3. Checking for matches:
+Student Queenie Venus (Section: '') -> Matching Schedules: 0
+Student Mel (Section: '') -> Matching Schedules: 0
+Student Sonjeev (Section: 'BSIT 2-C') -> Matching Schedules: 0
