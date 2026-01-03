@@ -159,7 +159,7 @@ $schedules = $conn->query($schedules_sql);
                                         <?php echo htmlspecialchars($sch['day']); ?>
                                     </span>
                                 </td>
-                                <td style="padding: 15px; color: #666;"><?php echo htmlspecialchars($sch['time_start'] ?: '-'); ?></td>
+                                <td style="padding: 15px; color: #666;"><?php echo htmlspecialchars($sch['time'] ?: '-'); ?></td>
                             </tr>
                         <?php endwhile; ?>
                     <?php else: ?>

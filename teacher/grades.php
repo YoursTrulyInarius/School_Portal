@@ -46,7 +46,7 @@ $schedules_sql = "SELECT sch.id,
                          s.grade_level as class_year, 
                          c.course_name as subject, 
                          sch.day, 
-                         sch.time_start,
+                         sch.time,
                          sch.section_id
                   FROM schedules sch
                   LEFT JOIN courses c ON sch.course_id = c.id

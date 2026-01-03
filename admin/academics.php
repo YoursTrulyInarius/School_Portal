@@ -9,11 +9,12 @@ check_admin();
 $success = '';
 $error = '';
 
-// Predefined course mappings
-$course_mappings = [
-    // College Courses
+// Predefined course mappings (College)
+$college_courses = [
+    'ACT' => 'Associate of Computer Technology',
     'BSIT' => 'Bachelor of Science in Information Technology',
     'BSCS' => 'Bachelor of Science in Computer Science',
+    'BSIS' => 'Bachelor of Science in Information Systems',
     'BSBA' => 'Bachelor of Science in Business Administration',
     'BSED' => 'Bachelor of Secondary Education',
     'BEED' => 'Bachelor of Elementary Education',
@@ -23,11 +24,14 @@ $course_mappings = [
     'BSOA' => 'Bachelor of Science in Office Administration',
     'BSCRIM' => 'Bachelor of Science in Criminology',
     'BSHRM' => 'Bachelor of Science in Hotel and Restaurant Management',
+    'BSHM' => 'Bachelor of Science in Hospitality Management',
     'BSTM' => 'Bachelor of Science in Tourism Management',
     'BSN' => 'Bachelor of Science in Nursing',
-    'BSPSYCH' => 'Bachelor of Science in Psychology',
-    
-    // Senior High Strands
+    'BSPSYCH' => 'Bachelor of Science in Psychology'
+];
+
+// Predefined strand mappings (Senior High)
+$shs_strands = [
     'ABM' => 'Accountancy, Business and Management',
     'STEM' => 'Science, Technology, Engineering and Mathematics',
     'HUMSS' => 'Humanities and Social Sciences',
@@ -35,6 +39,7 @@ $course_mappings = [
     'TVL-ICT' => 'Technical-Vocational-Livelihood - ICT',
     'TVL-HE' => 'Technical-Vocational-Livelihood - Home Economics',
     'TVL-IA' => 'Technical-Vocational-Livelihood - Industrial Arts',
+    'ADT' => 'Arts and Design Track',
     'SMAW' => 'Shielded Metal Arc Welding (NCII)',
     'CSS' => 'Computer Systems Servicing (NCII)',
     'EIM' => 'Electrical Installation and Maintenance (NCII)',
@@ -535,33 +540,8 @@ function toggleItems() {
 }
 
 // Mappings
-const courseMappings = {
-    "BSIT": "Bachelor of Science in Information Technology",
-    "BSCS": "Bachelor of Science in Computer Science",
-    "BSIS": "Bachelor of Science in Information Systems",
-    "BSBA": "Bachelor of Science in Business Administration",
-    "BSHM": "Bachelor of Science in Hospitality Management",
-    "BSTM": "Bachelor of Science in Tourism Management",
-    "BEED": "Bachelor of Elementary Education",
-    "BSED": "Bachelor of Secondary Education",
-    "BSCRIM": "Bachelor of Science in Criminology",
-    "BSN": "Bachelor of Science in Nursing"
-};
-
-const strandMappings = {
-    "STEM": "Science, Technology, Engineering, and Mathematics",
-    "ABM": "Accountancy, Business, and Management",
-    "HUMSS": "Humanities and Social Sciences",
-    "GAS": "General Academic Strand",
-    "TVL": "Technical-Vocational-Livelihood",
-    "ICT": "Information and Communications Technology",
-    "HE": "Home Economics",
-    "ADT": "Arts and Design Track",
-    "AS": "Automotive Servicing",
-    "EIM": "Electrical Installation and Maintenance",
-    "CSS": "Computer Systems Servicing",
-    "SMAW": "Shielded Metal Arc Welding"
-};
+const courseMappings = <?php echo json_encode($college_courses); ?>;
+const strandMappings = <?php echo json_encode($shs_strands); ?>;
 
 // Auto-fill Listeners
 const addCourseCode = document.getElementById('addCourseCode');

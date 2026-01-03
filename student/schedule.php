@@ -23,7 +23,7 @@ $sch_sql = "SELECT sch.*,
             LEFT JOIN courses c ON sch.course_id = c.id
             LEFT JOIN teachers t ON sch.teacher_id = t.id
             WHERE sch.section_id = '$section_id'
-            ORDER BY FIELD(sch.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), sch.time_start";
+            ORDER BY FIELD(sch.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), sch.time";
 $result = $conn->query($sch_sql);
 ?>
 <!DOCTYPE html>
@@ -162,7 +162,7 @@ $result = $conn->query($sch_sql);
                                     <td class="subject-name"><?php echo htmlspecialchars($row['subject'] ?: 'N/A'); ?></td>
                                     <td><?php echo htmlspecialchars(($row['lastname'] ?? '') . ', ' . ($row['firstname'] ?? '')); ?></td>
                                     <td><span class="day-badge"><?php echo htmlspecialchars($row['day'] ?? ''); ?></span></td>
-                                    <td><?php echo htmlspecialchars($row['time_start'] ?? 'TBA'); ?></td>
+                                    <td><?php echo htmlspecialchars($row['time'] ?? 'TBA'); ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>

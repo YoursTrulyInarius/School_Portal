@@ -52,7 +52,7 @@ $students_res = $conn->query($stu_sql);
                     <strong>Section:</strong> <?php echo htmlspecialchars($class['grade_level'].' - '.$class['section_name']); ?>
                 </p>
                 <p style="margin: 0; color: #888; font-size: 0.85rem;">
-                    <i style="color: var(--secondary-color);"><?php echo $class['day']; ?></i> &bull; <?php echo date('g:iA', strtotime($class['time_start'])); ?>
+                    <i style="color: var(--secondary-color);"><?php echo $class['day']; ?></i> &bull; <?php echo $class['time']; ?>
                 </p>
             </div>
             <a href="my_classes.php" class="btn" style="background: #6c757d; padding: 8px 15px; font-size: 0.9rem;">&larr; Back to Classes</a>

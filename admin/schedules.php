@@ -14,13 +14,14 @@ $course_id = isset($_GET['course_id']) ? clean_input($_GET['course_id']) : '';
 $strand_id = isset($_GET['strand_id']) ? clean_input($_GET['strand_id']) : '';
 
 // Handle Form Submission
+// Handle Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add_schedule'])) {
         // Required Fields
         $day = clean_input($_POST['day']);
         $time = clean_input($_POST['time']);
         $subject = clean_input($_POST['subject']);
-        $section_name = clean_input($_POST['section_name']);
+        $section_id = clean_input($_POST['section_id']);
         $teacher_id = clean_input($_POST['teacher_id']);
         
         // Optional
@@ -28,12 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $p_course_id = isset($_POST['course_id']) && !empty($_POST['course_id']) ? clean_input($_POST['course_id']) : null;
         $p_strand_id = isset($_POST['strand_id']) && !empty($_POST['strand_id']) ? clean_input($_POST['strand_id']) : null;
 
-        if (empty($day) || empty($time) || empty($subject) || empty($section_name) || empty($teacher_id)) {
+        if (empty($day) || empty($time) || empty($subject) || empty($section_id) || empty($teacher_id)) {
             $error = "Please fill in all required fields (Block, Subject, Time, Day, Teacher).";
         } else {
-            // Insert with manual section name and text-based time
-            $stmt = $conn->prepare("INSERT INTO schedules (course_id, strand_id, section_name, day, time, room, subject, teacher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iisssssi", $p_course_id, $p_strand_id, $section_name, $day, $time, $room, $subject, $teacher_id);
+            // Insert with proper columns including strand_id and section_id
+            $stmt = $conn->prepare("INSERT INTO schedules (course_id, strand_id, section_id, day, time, room, subject, teacher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iiissssi", $p_course_id, $p_strand_id, $section_id, $day, $time, $room, $subject, $teacher_id);
             
             if ($stmt->execute()) {
                 $redirect_params = [];
@@ -76,18 +77,30 @@ if ($course_id) {
 // Fetch Schedules if context is set
 $schedules = []; // Grouped by section_name
 if ($course_id || $strand_id) {
-    $where_clause = $course_id ? "course_id = '$course_id'" : "strand_id = '$strand_id'";
+    $where_clause = $course_id ? "s.course_id = '$course_id'" : "s.strand_id = '$strand_id'";
     
-    $sql = "SELECT s.*, t.firstname, t.lastname 
+    // Updated Query to use section_id and JOIN sections table
+    $sql = "SELECT s.*, t.firstname, t.lastname, sec.section_name 
             FROM schedules s 
             LEFT JOIN teachers t ON s.teacher_id = t.id 
+            LEFT JOIN sections sec ON s.section_id = sec.id
             WHERE $where_clause 
-            ORDER BY section_name, FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), time";
+            ORDER BY sec.section_name, FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), time";
             
     $res = $conn->query($sql);
     while ($row = $res->fetch_assoc()) {
         $schedules[$row['section_name']][] = $row;
     }
+}
+
+// Fetch Sections for the specific program for dropdown
+$available_sections = [];
+if ($course_id) {
+    $sec_res = $conn->query("SELECT * FROM sections WHERE course_id = '$course_id' ORDER BY year_level, block");
+    while($s = $sec_res->fetch_assoc()) $available_sections[] = $s;
+} elseif ($strand_id) {
+    $sec_res = $conn->query("SELECT * FROM sections WHERE strand_id = '$strand_id' ORDER BY year_level, block");
+    while($s = $sec_res->fetch_assoc()) $available_sections[] = $s;
 }
 
 // Lists for Dropdowns/Selection
@@ -226,10 +239,12 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
                     <div class="form-row">
                         <div class="form-group">
                             <label>Block / Section *</label>
-                            <input type="text" name="section_name" class="form-control" placeholder="e.g. BSIT 1-A" required list="existing_sections">
-                            <datalist id="existing_sections">
-                                <?php foreach(array_keys($schedules) as $sec_name) { echo "<option value='".htmlspecialchars($sec_name)."'>"; } ?>
-                            </datalist>
+                            <select name="section_id" class="form-control" required>
+                                <option value="">Select Section</option>
+                                <?php foreach($available_sections as $sec): ?>
+                                    <option value="<?php echo $sec['id']; ?>"><?php echo htmlspecialchars($sec['section_name']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Subject *</label>

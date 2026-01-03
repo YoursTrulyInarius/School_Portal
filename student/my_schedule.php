@@ -34,7 +34,7 @@ $schedules_sql = "SELECT sch.*,
                   FROM schedules sch
                   LEFT JOIN courses c ON sch.course_id = c.id
                   LEFT JOIN teachers t ON sch.teacher_id = t.id
-                  WHERE REPLACE(REPLACE(sch.section_name, '-', ''), ' ', '') = '$normalized_section_name'
+                  WHERE sch.section_id = '$section_id'
                   ORDER BY FIELD(sch.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), sch.time";
 $schedules_res = $conn->query($schedules_sql);
 

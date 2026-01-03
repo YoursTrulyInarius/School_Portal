@@ -81,13 +81,16 @@ CREATE TABLE schedules (
     id INT AUTO_INCREMENT PRIMARY KEY,
     section_id INT NOT NULL,
     teacher_id INT NOT NULL,
-    course_id INT NOT NULL,
+    course_id INT NULL,
+    strand_id INT NULL,
+    subject VARCHAR(100) NOT NULL,
     day VARCHAR(20) NOT NULL, -- e.g., 'Monday', 'MWF'
-    time_start TIME NOT NULL,
-    time_end TIME NOT NULL,
+    time VARCHAR(50) NOT NULL, -- e.g., '9:00 AM - 10:30 AM'
+    room VARCHAR(50) NULL,
     FOREIGN KEY (section_id) REFERENCES sections(id) ON DELETE CASCADE,
     FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+    FOREIGN KEY (strand_id) REFERENCES strands(id) ON DELETE CASCADE
 );
 
 -- 7. Grades Table

@@ -23,10 +23,10 @@ $sql = "SELECT sch.id as schedule_id,
                c.course_code,
                s.section_name,
                s.grade_level as class_year,
-               s.grade_level as class_year,
-               st.strand_code,
+                st.strand_code,
                 sch.day,
-                sch.time
+                sch.time,
+                sch.subject
         FROM schedules sch
         LEFT JOIN courses c ON sch.course_id = c.id
         LEFT JOIN sections s ON sch.section_id = s.id

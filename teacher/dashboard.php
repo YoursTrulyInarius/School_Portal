@@ -16,19 +16,19 @@ $teacher_id = $teacher['id'];
 $_SESSION['teacher_id'] = $teacher_id;
 
 // Fetch Classes/Schedules assigned to this teacher
+// Fetch Classes/Schedules assigned to this teacher
 $sql = "SELECT sch.id as schedule_id, 
                c.course_name as subject, 
                c.course_code,
                s.section_name, 
                s.grade_level as class_year,
                sch.day, 
-               sch.time_start, 
-               sch.time_end
+               sch.time
         FROM schedules sch
         LEFT JOIN courses c ON sch.course_id = c.id
         LEFT JOIN sections s ON sch.section_id = s.id
         WHERE sch.teacher_id = '$teacher_id'
-        ORDER BY sch.day, sch.time_start";
+        ORDER BY sch.day, sch.time";
 $classes_res = $conn->query($sql);
 
 // Fetch Announcements
