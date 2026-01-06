@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS westprime_portal;
 USE westprime_portal;
 
 -- 1. Users Table (Core Authentication)
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE users (
 );
 
 -- 2. Teachers Table (Linked to Users)
-CREATE TABLE teachers (
+CREATE TABLE IF NOT EXISTS teachers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     employee_id VARCHAR(20) UNIQUE NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE teachers (
 );
 
 -- 3. Courses/Subjects Table (College)
-CREATE TABLE courses (
+CREATE TABLE IF NOT EXISTS courses (
     id INT AUTO_INCREMENT PRIMARY KEY,
     course_name VARCHAR(100) NOT NULL,
     course_code VARCHAR(20) UNIQUE NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE courses (
 );
 
 -- 3.1 Strands Table (Senior High)
-CREATE TABLE strands (
+CREATE TABLE IF NOT EXISTS strands (
     id INT AUTO_INCREMENT PRIMARY KEY,
     strand_name VARCHAR(100) NOT NULL,
     strand_code VARCHAR(20) UNIQUE NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE strands (
 );
 
 -- 4. Sections Table (Academic Structure)
-CREATE TABLE sections (
+CREATE TABLE IF NOT EXISTS sections (
     id INT AUTO_INCREMENT PRIMARY KEY,
     section_name VARCHAR(50) NOT NULL,
     grade_level VARCHAR(20) NOT NULL, -- e.g., 'Grade 7', 'Grade 12', '1st Year', '2nd Year'
@@ -59,7 +59,7 @@ CREATE TABLE sections (
 );
 
 -- 5. Students Table (Linked to Users and Sections)
-CREATE TABLE students (
+CREATE TABLE IF NOT EXISTS students (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     lrn VARCHAR(20) UNIQUE NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE students (
 );
 
 -- 6. Class Schedules (Linking Sections, Courses, and Teachers)
-CREATE TABLE schedules (
+CREATE TABLE IF NOT EXISTS schedules (
     id INT AUTO_INCREMENT PRIMARY KEY,
     section_id INT NOT NULL,
     teacher_id INT NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE schedules (
 );
 
 -- 7. Grades Table
-CREATE TABLE grades (
+CREATE TABLE IF NOT EXISTS grades (
     id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT NOT NULL,
     course_id INT NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE grades (
 );
 
 -- 8. Attendance Table
-CREATE TABLE attendance (
+CREATE TABLE IF NOT EXISTS attendance (
     id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT NOT NULL,
     course_id INT NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE attendance (
 );
 
 -- 9. Announcements Table
-CREATE TABLE announcements (
+CREATE TABLE IF NOT EXISTS announcements (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL, -- The author (usually admin)
     title VARCHAR(255) NOT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE announcements (
 );
 
 -- 10. Enrollment Requests Table
-CREATE TABLE enrollment_requests (
+CREATE TABLE IF NOT EXISTS enrollment_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE enrollment_requests (
 );
 
 -- 11. Payment Transactions Table
-CREATE TABLE payment_transactions (
+CREATE TABLE IF NOT EXISTS payment_transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
