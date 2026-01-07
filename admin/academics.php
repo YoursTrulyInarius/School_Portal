@@ -193,12 +193,7 @@ $sql_sections = "SELECT s.*,
                  ORDER BY type, s.year_level, s.block ASC";
 $result_sections = $conn->query($sql_sections);
 
-function getOrdinalSuffix($num) {
-    if ($num == 1) return 'st';
-    if ($num == 2) return 'nd';
-    if ($num == 3) return 'rd';
-    return 'th';
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
