@@ -222,13 +222,13 @@ function getOrdinalSuffix($num) {
             </div>
             <div class="form-group">
                 <label>Last Name *</label>
-                <input type="text" name="lastname" required>
+                <input type="text" name="lastname" required placeholder="Enter lastname">
             </div>
         </div>
 
         <div class="form-group">
             <label>Email Address *</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" required placeholder="Enter email">
         </div>
 
         <div class="form-group">
