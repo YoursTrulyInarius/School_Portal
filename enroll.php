@@ -56,12 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-function getOrdinalSuffix($num) {
-    if ($num == 1) return 'st';
-    if ($num == 2) return 'nd';
-    if ($num == 3) return 'rd';
-    return 'th';
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
