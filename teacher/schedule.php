@@ -19,7 +19,7 @@ $days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday
 
 // Fetch schedule for selected day
 $sql = "SELECT sch.id as schedule_id, 
-               c.course_name as course_name_legacy,
+               c.course_name as course_name_legacy,     
                c.course_code,
                s.section_name,
                s.grade_level as class_year,
