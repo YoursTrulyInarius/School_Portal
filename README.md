@@ -68,9 +68,6 @@ A comprehensive web-based school management system built with PHP and MySQL. Thi
     - Open your browser and navigate to:
       `http://localhost/School_Portal/setup_admin.php`
     - This will create a default admin account.
-    - **Default Credentials**:
-        - **Username**: `admin`
-        - **Password**: `admin123`
 
 5.  **Access the Application**
     - Go to `http://localhost/School_Portal/` to log in.
