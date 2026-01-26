@@ -43,8 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Wait, "Grade Configuration" in Admin suggests weighting.
             // For now, let's just Insert new grades.
             
-            $sql = "INSERT INTO grades (student_id, course_id, teacher_id, grade_type, score, term) 
-                    VALUES ('$s_id', '$course_id', '$teacher_id', '$type', '$score', '$term')";
+            $sql = "INSERT INTO grades (student_id, schedule_id, teacher_id, grade_type, score, term) 
+                    VALUES ('$s_id', '$schedule_id', '$teacher_id', '$type', '$score', '$term')";
             $conn->query($sql);
         }
     }
@@ -61,7 +61,7 @@ $students_res = $conn->query("SELECT * FROM students WHERE section_id = '$sec_id
 $grades_sql = "SELECT g.*, s.lastname, s.firstname 
                FROM grades g 
                JOIN students s ON g.student_id = s.id 
-               WHERE g.course_id = '$course_id' AND g.teacher_id = '$teacher_id' 
+               WHERE g.schedule_id = '$schedule_id' AND g.teacher_id = '$teacher_id' 
                ORDER BY g.date_recorded DESC LIMIT 50";
 $grades_res = $conn->query($grades_sql);
 

@@ -2,35 +2,39 @@
 
 A comprehensive web-based school management system built with PHP and MySQL. This system facilitates efficient interaction between students, teachers, and administrators.
 
+> [!NOTE]
+> **Project Status**: 🚧 This project is currently **Ongoing** and under active development.
+
+## Key Recent Enhancements
+- **Professional Schedule Redesign**: Teacher schedules now match a premium "paper form" aesthetic, unified into a single weekly view.
+- **Hierarchical Grades System**: Admins can now drill-down from Programs to Sections and Students to view detailed transcripts.
+- **Grade Auto-Conversion**: Implement modern grading logic that automatically calculates point-scale grades from percentage inputs.
+
 ## Features
 
 ### 🔑 Authentication & Security
-<<<<<<< HEAD
-- **Secure Login & Registration**: Role-based access control.s
-=======
-- **Secure Login & Registration**: Role-based access control.
->>>>>>> bd5ba2ac2a816959d4bdd69097cbbf9b02c4fff7
+- **Secure Login & Registration**: Role-based access control (Admin, Teacher, Student).
 - **Forgot Password**: OTP-based password reset via email.
 - **Admin Setup**: Script to quickly initialize or reset admin access.
 
 ### 🛠 Administrative Module
 - **User Management**: Manage Students, Teachers, and Admin accounts.
+- **Hierarchical Academic Records**: View student grades through a professional multi-level interface.
+- **Schedules**: Manage class schedules and subjects by program and section.
 - **Announcements**: Post and manage school-wide announcements.
 - **Payments**: Track and manage student payments and transactions.
-- **Grades**: Oversee system-wide grading.
-- **Schedules**: Manage class schedules and subjects.
 
 ### 👨‍🏫 Teacher Module
-- **Profile Management**: Update personal details and profile picture.
-- **Class Implementation**: View assigned classes and subjects.
-- **Grading**: Input and manage student grades.
+- **Unified Weekly Schedule**: Access a professional, grouped view of all weekly classes.
+- **Smart Grading**: Input grades with automatic percentage-to-point conversion.
+- **Class Implementation**: Manage specific subjects and sections efficiently.
 - **Student Data**: View student details and profiles.
 
 ### 👨‍🎓 Student Module
-- **Dashboard**: View announcements and personal stats.
-- **Grades**: Check academic performance and grades.
-- **Schedule**: View class timetables.
-- **Attendance**: Track attendance records.
+- **Dashboard**: View announcements and personal performance stats.
+- **Grades Transcript**: Check verified academic performance and teacher feedback.
+- **Subject Loads**: View professional class timetables.
+- **Attendance**: Track attendance records across subjects.
 
 ## 💻 Tech Stack
 - **Frontend**: HTML5, CSS3, JavaScript.

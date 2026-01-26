@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_grade'])) {
         $stmt->bind_param("dii", $grade, $student_id, $schedule_id);
     } else {
         // Insert new grade
-        $stmt = $conn->prepare("INSERT INTO grades (student_id, schedule_id, grade) VALUES (?, ?, ?)");
-        $stmt->bind_param("iid", $student_id, $schedule_id, $grade);
+        $stmt = $conn->prepare("INSERT INTO grades (student_id, schedule_id, grade, teacher_id) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("iidi", $student_id, $schedule_id, $grade, $teacher_id);
     }
     
     if ($stmt->execute()) {
@@ -38,22 +38,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_grade'])) {
     }
 }
 
-// Get selected schedule
+// Get selected section and schedule
+$selected_section = isset($_GET['section']) ? clean_input($_GET['section']) : '';
 $selected_schedule = isset($_GET['schedule']) ? clean_input($_GET['schedule']) : '';
 
-// Fetch teacher's schedules
-$schedules_sql = "SELECT sch.id, 
-                         s.grade_level as class_year, 
-                         c.course_name as subject, 
-                         sch.day, 
-                         sch.time,
-                         sch.section_id
-                  FROM schedules sch
-                  LEFT JOIN courses c ON sch.course_id = c.id
-                  LEFT JOIN sections s ON sch.section_id = s.id
-                  WHERE sch.teacher_id = '$teacher_id' 
-                  ORDER BY s.grade_level, c.course_name";
-$schedules_result = $conn->query($schedules_sql);
+// Fetch teacher's distinct sections
+$sections_sql = "SELECT DISTINCT s.id, s.grade_level, s.section_name, st.strand_code
+                 FROM schedules sch
+                 JOIN sections s ON sch.section_id = s.id
+                 LEFT JOIN strands st ON s.strand_id = st.id
+                 WHERE sch.teacher_id = '$teacher_id' 
+                 ORDER BY s.grade_level, s.section_name";
+$sections_result = $conn->query($sections_sql);
+
+// Fetch subjects for the selected section
+$subjects_result = null;
+if ($selected_section) {
+    $subjects_sql = "SELECT sch.id, sch.subject, c.course_name as course_legacy
+                     FROM schedules sch
+                     LEFT JOIN courses c ON sch.course_id = c.id
+                     WHERE sch.teacher_id = '$teacher_id' AND sch.section_id = '$selected_section'
+                     ORDER BY sch.subject";
+    $subjects_result = $conn->query($subjects_sql);
+}
 
 // Fetch students and grades for selected schedule
 $students = [];
@@ -230,33 +237,36 @@ function getGradeColor($grade) {
             </div>
         <?php endif; ?>
 
-        <!-- Grade Scale Reference -->
-        <div class="grade-scale">
-            <h4 style="margin: 0 0 10px 0;">📊 Grading Scale (1.00 - 5.00)</h4>
-            <ul>
-                <?php foreach ($grade_options as $grade => $description): ?>
-                    <li>
-                        <span class="grade-badge" style="background: <?php echo getGradeColor($grade); ?>; padding: 2px 8px; font-size: 0.7rem;">
-                            <?php echo $grade; ?>
-                        </span>
-                        <?php echo $description; ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
 
         <!-- Class/Subject Selector -->
         <div class="card" style="margin-bottom: 25px;">
-            <h3 style="margin: 0 0 15px 0;">Select Class/Subject</h3>
-            <form method="GET">
-                <select name="schedule" class="form-control" style="max-width: 500px;" onchange="this.form.submit()">
-                    <option value="">-- Select Class/Subject --</option>
-                    <?php while($sched = $schedules_result->fetch_assoc()): ?>
-                        <option value="<?php echo $sched['id']; ?>" <?php echo $selected_schedule == $sched['id'] ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($sched['class_year'] . ' - ' . $sched['subject']); ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
+            <h3 style="margin: 0 0 15px 0;">Select Class & Subject</h3>
+            <form method="GET" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div class="form-group" style="flex: 1; min-width: 250px;">
+                    <label style="font-weight: 600; margin-bottom: 5px; display: block;">Step 1: Select Course/Section</label>
+                    <select name="section" class="form-control" onchange="this.form.schedule.value=''; this.form.submit()">
+                        <option value="">-- Select Section --</option>
+                        <?php while($sec = $sections_result->fetch_assoc()): ?>
+                            <option value="<?php echo $sec['id']; ?>" <?php echo $selected_section == $sec['id'] ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($sec['grade_level'] . ' - ' . $sec['section_name'] . ($sec['strand_code'] ? ' (' . $sec['strand_code'] . ')' : '')); ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+
+                <div class="form-group" style="flex: 1; min-width: 250px;">
+                    <label style="font-weight: 600; margin-bottom: 5px; display: block;">Step 2: Select Subject</label>
+                    <select name="schedule" class="form-control" onchange="this.form.submit()" <?php echo !$selected_section ? 'disabled' : ''; ?>>
+                        <option value="">-- Select Subject --</option>
+                        <?php if ($subjects_result): ?>
+                            <?php while($subj = $subjects_result->fetch_assoc()): ?>
+                                <option value="<?php echo $subj['id']; ?>" <?php echo $selected_schedule == $subj['id'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($subj['subject'] ? $subj['subject'] : $subj['course_legacy']); ?>
+                                </option>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                    </select>
+                </div>
             </form>
         </div>
 
@@ -329,6 +339,11 @@ function getGradeColor($grade) {
             
             <div class="form-group" style="margin-bottom: 20px;">
                 <label style="font-weight: 600; margin-bottom: 5px; display: block;">Grade:</label>
+                <input type="number" id="percentage_input" class="form-control" placeholder="Enter Grade" oninput="convertToPointScale(this.value)">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label style="font-weight: 600; margin-bottom: 5px; display: block;">Point Grade:</label>
                 <select name="grade" id="modal_grade" class="form-control" required>
                     <option value="">-- Select Grade --</option>
                     <?php foreach ($grade_options as $grade => $description): ?>
@@ -346,10 +361,35 @@ function getGradeColor($grade) {
 </div>
 
 <script>
+function convertToPointScale(val) {
+    const score = parseFloat(val);
+    const gradeSelect = document.getElementById('modal_grade');
+    
+    if (isNaN(score) || score < 0) {
+        gradeSelect.value = "";
+        return;
+    }
+
+    let pointGrade = "";
+    if (score >= 98 && score <= 100) pointGrade = "1.00";
+    else if (score >= 95 && score <= 97) pointGrade = "1.25";
+    else if (score >= 92 && score <= 94) pointGrade = "1.50";
+    else if (score >= 89 && score <= 91) pointGrade = "1.75";
+    else if (score >= 86 && score <= 88) pointGrade = "2.00";
+    else if (score >= 83 && score <= 85) pointGrade = "2.25";
+    else if (score >= 80 && score <= 82) pointGrade = "2.50";
+    else if (score >= 75 && score <= 79) pointGrade = "3.00";
+    else if (score >= 70 && score <= 74) pointGrade = "4.00";
+    else if (score < 75) pointGrade = "5.00";
+
+    gradeSelect.value = pointGrade;
+}
+
 function openGradeModal(studentId, studentName, currentGrade) {
     document.getElementById('modal_student_id').value = studentId;
     document.getElementById('modal_student_name').textContent = studentName;
     document.getElementById('modal_grade').value = currentGrade || '';
+    document.getElementById('percentage_input').value = ''; // Reset percentage input
     document.getElementById('gradeModal').classList.add('active');
 }
 

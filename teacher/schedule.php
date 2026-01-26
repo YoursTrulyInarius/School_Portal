@@ -8,41 +8,35 @@ check_login();
 if ($_SESSION['role'] !== 'teacher') { header("Location: ../index.php"); exit(); }
 $teacher_id = $_SESSION['teacher_id'];
 
-// Get current day of the week
-$current_day = date('l'); // Returns: Monday, Tuesday, etc.
+// Fetch teacher info for display
+$teacher_sql = "SELECT firstname, lastname FROM teachers WHERE id = '$teacher_id'";
+$teacher_res = $conn->query($teacher_sql);
+$teacher_info = $teacher_res->fetch_assoc();
+$teacher_fullname = $teacher_info['firstname'] . ' ' . $teacher_info['lastname'];
 
-// Get selected day from URL or default to current day
-$selected_day = isset($_GET['day']) ? clean_input($_GET['day']) : $current_day;
 
-// Define days of the week
-$days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-// Fetch schedule for selected day
-$sql = "SELECT sch.id as schedule_id, 
+// Fetch all schedules for the teacher
+$sql = "SELECT sch.*, 
                c.course_name as course_name_legacy,     
                c.course_code,
                s.section_name,
                s.grade_level as class_year,
-                st.strand_code,
-                sch.day,
-                sch.time,
-                sch.subject
+               st.strand_code
         FROM schedules sch
         LEFT JOIN courses c ON sch.course_id = c.id
         LEFT JOIN sections s ON sch.section_id = s.id
         LEFT JOIN strands st ON s.strand_id = st.id
-        WHERE sch.teacher_id = '$teacher_id' AND sch.day = '$selected_day'
-        ORDER BY sch.time, s.grade_level";
+        WHERE sch.teacher_id = '$teacher_id'
+        ORDER BY FIELD(sch.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), sch.time";
 $result = $conn->query($sql);
 
-// Fetch all schedules for counting badges
-$all_sql = "SELECT day, COUNT(*) as count FROM schedules WHERE teacher_id = '$teacher_id' GROUP BY day";
-$all_result = $conn->query($all_sql);
-$day_counts = [];
-while($row = $all_result->fetch_assoc()) {
-    $day_counts[$row['day']] = $row['count'];
+// Group schedules by Day
+$grouped_schedules = [];
+while ($row = $result->fetch_assoc()) {
+    $grouped_schedules[$row['day']][] = $row;
 }
 
+$valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,207 +47,101 @@ while($row = $all_result->fetch_assoc()) {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }
-        
-        .day-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #eef1f5; 
+            margin: 0; 
         }
-        
-        .day-tab {
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
+
+        .paper-container {
+            max-width: 950px;
+            margin: 30px auto;
             background: white;
-            color: #666;
-            border: 2px solid #e0e0e0;
-            transition: all 0.2s ease;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 5px solid #0056b3;
+        }
+
+        /* Header Section */
+        .doc-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-logo {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            left: 20px;
+            top: 0;
         }
         
-        .day-tab:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
+        .header-text {
+            line-height: 1.4;
         }
         
-        .day-tab.active {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
+        .header-text h2 { margin: 0; font-size: 1.2rem; color: #333; font-weight: 700; text-transform: uppercase; }
+        .header-text p { margin: 0; font-size: 0.8rem; color: #555; }
+        
+        /* Colored Bars */
+        .bar-title {
+            text-align: center;
+            font-weight: 800;
+            padding: 5px;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            border: 1px solid #000;
+            margin-top: -1px; /* collapse borders */
         }
         
-        .day-tab.today:not(.active) {
-            border-color: #2ecc71;
-            background: #f0fff4;
-        }
-        
-        .day-tab .badge {
-            background: rgba(0,0,0,0.15);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-        }
-        
-        .day-tab.active .badge {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .today-indicator {
-            display: inline-block;
-            background: #2ecc71;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
+        .bar-yellow { background: #FFFF00; color: black; margin-top: 20px; border: 1px solid black; }
+        .bar-red { background: #FF0000; color: white; }
+        .bar-cyan { background: #00FFFF; color: black; }
+
+        /* The Grid Table */
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
-        }
-        
-        .schedule-table th {
-            padding: 15px;
-            text-align: left;
-            color: white;
-            font-weight: 600;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-        }
-        
-        .schedule-table td {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .schedule-table tr:hover {
-            background: #f9f9f9;
-        }
-        
-        .subject-name {
-            font-weight: 600;
-            color: #333;
-            font-size: 1rem;
-        }
-        
-        .class-badge {
-            display: inline-block;
-            background: #e3f2fd;
-            color: #1976d2;
-            padding: 4px 12px;
-            border-radius: 15px;
             font-size: 0.85rem;
-            font-weight: 500;
-        }
-        
-        .room-badge {
-            display: inline-block;
-            background: #fff3e0;
-            color: #e65100;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        
-        .time-display {
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 0.95rem;
-        }
-        
-        .empty-state {
-            padding: 60px 40px;
-            text-align: center;
-            color: #888;
-        }
-        
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-        
-        .empty-state h3 {
-            margin: 0 0 10px 0;
-            color: #666;
-        }
-        
-        .empty-state p {
-            margin: 0;
-            font-size: 0.9rem;
+            margin-top: -1px; /* Connect to bars */
         }
 
-        @media (max-width: 768px) {
-            .day-tabs {
-                gap: 5px;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 10px;
-            }
-            
-            .day-tab {
-                padding: 8px 12px;
-                font-size: 0.8rem;
-                flex-shrink: 0;
-            }
-            
-            .schedule-table {
-                min-width: 400px;
-            }
-            
-            .schedule-table th,
-            .schedule-table td {
-                padding: 10px 8px;
-                font-size: 0.85rem;
-            }
-            
-            .hide-mobile {
-                display: none;
-            }
-            
-            .subject-name {
-                font-size: 0.9rem;
-            }
-            
-            .class-badge,
-            .room-badge {
-                font-size: 0.75rem;
-                padding: 3px 8px;
-            }
-            
-            .empty-state {
-                padding: 40px 20px;
-            }
-            
-            .empty-state-icon {
-                font-size: 3rem;
-            }
+        .schedule-table th, .schedule-table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
         }
+
+        .schedule-table th {
+            font-weight: 700;
+            text-transform: uppercase;
+            background: white;
+            color: black;
+            padding: 10px;
+        }
+
+        .day-cell {
+            font-weight: 700;
+            background: white;
+            vertical-align: middle;
+            text-transform: uppercase;
+            width: 100px;
+        }
+
+        .subject-cell { font-weight: 600; color: #0056b3; }
+        .time-cell { font-family: monospace; font-size: 0.9rem; }
         
-        @media (max-width: 480px) {
-            .day-tab {
-                padding: 6px 10px;
-                font-size: 0.75rem;
-            }
-            
-            .day-tab .badge {
-                padding: 1px 5px;
-                font-size: 0.65rem;
-            }
-            
-            .schedule-table th,
-            .schedule-table td {
-                padding: 8px 5px;
-                font-size: 0.8rem;
-            }
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .paper-container { padding: 15px; margin: 10px; }
+            .header-logo { width: 50px; height: 50px; left: 0; position: relative; display: block; margin: 0 auto 10px auto; }
+            .doc-header { display: block; position: static; }
+            .schedule-table { font-size: 0.75rem; }
+            .day-cell { width: auto; }
         }
     </style>
 </head>
@@ -263,93 +151,81 @@ while($row = $all_result->fetch_assoc()) {
     <?php include '../includes/teacher_sidebar.php'; ?>
 
     <div class="main-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
-            <h2 style="margin: 0; color: var(--primary-color);">
-                My Schedule
-                <?php if ($selected_day == $current_day): ?>
-                    <span class="today-indicator">📅 Today</span>
-                <?php endif; ?>
-            </h2>
-            <span style="color: #666; font-size: 0.9rem;">
-                <?php echo date('l, F j, Y'); ?>
-            </span>
-        </div>
         
-        <!-- Day Tabs -->
-        <div class="day-tabs">
-            <?php foreach ($days_of_week as $day): ?>
-                <?php 
-                $is_active = ($selected_day == $day);
-                $is_today = ($current_day == $day);
-                $count = isset($day_counts[$day]) ? $day_counts[$day] : 0;
-                ?>
-                <a href="?day=<?php echo $day; ?>" 
-                   class="day-tab <?php echo $is_active ? 'active' : ''; ?> <?php echo $is_today ? 'today' : ''; ?>">
-                    <?php echo substr($day, 0, 3); ?>
-                    <?php if ($count > 0): ?>
-                        <span class="badge"><?php echo $count; ?></span>
-                    <?php endif; ?>
-                </a>
-            <?php endforeach; ?>
-        </div>
-        
-        <!-- Schedule Table -->
-        <div class="card" style="padding: 0; overflow: hidden;">
-            <?php if ($result->num_rows > 0): ?>
-                <table class="schedule-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 20%;">Time</th>
-                            <th style="width: 40%;">Subject</th>
-                            <th style="width: 20%;">Section</th>
-                            <th style="width: 20%;">Class/Year</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php while($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td>
-                                <span class="time-display">
-                                    <?php echo htmlspecialchars($row['time']); ?>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="subject-name">
-                                    <?php echo htmlspecialchars($row['subject'] ? $row['subject'] : ($row['course_name_legacy'] ?: 'N/A')); ?>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="class-badge">
-                                    <?php echo htmlspecialchars($row['section_name'] . ($row['strand_code'] ? ' (' . $row['strand_code'] . ')' : '')); ?>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="class-badge"><?php echo htmlspecialchars($row['class_year'] ?: 'N/A'); ?></span>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <div class="empty-state">
-                    <div class="empty-state-icon">📭</div>
-                    <h3>No Classes on <?php echo $selected_day; ?></h3>
-                    <p>You don't have any scheduled classes for this day.</p>
+        <div class="paper-container">
+            <!-- Header -->
+            <div class="doc-header">
+                <img src="<?php echo BASE_URL; ?>logo.jpg" alt="Logo" class="header-logo">
+                <div class="header-text">
+                    <h2>West Prime Horizon Institute, Inc.</h2>
+                    <p>West Prime Horizon Institute Building<br>
+                    V. Sagun cor. M. Roxas St.<br>
+                    San Francisco Dist. Pagadian City</p>
                 </div>
-            <?php endif; ?>
+            </div>
+
+            <!-- Title Bars -->
+            <div class="bar-title bar-yellow">TEACHER'S SCHEDULE</div>
+            <div class="bar-title bar-red">2ND SEMESTER AY 2025-2026</div> 
+            <div class="bar-title bar-cyan"><?php echo htmlspecialchars($teacher_fullname); ?></div>
+
+            <!-- Table -->
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th style="width: 12%;">DAY</th>
+                        <th style="width: 18%;">TIME</th>
+                        <th style="width: 30%;">SUBJECT</th>
+                        <th style="width: 25%;">SECTION</th>
+                        <th style="width: 15%;">CLASS/YEAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    foreach ($valid_days as $day): 
+                        $day_items = isset($grouped_schedules[$day]) ? $grouped_schedules[$day] : [];
+                        $row_count = max(1, count($day_items)); // At least 1 row per day
+                    ?>
+                        <?php for ($i = 0; $i < $row_count; $i++): ?>
+                            <tr>
+                                <!-- Day Column (Rowspan) -->
+                                <?php if ($i === 0): ?>
+                                    <td class="day-cell" rowspan="<?php echo $row_count; ?>">
+                                        <?php echo strtoupper($day); ?>
+                                    </td>
+                                <?php endif; ?>
+
+                                <!-- Schedule Details -->
+                                <?php if (isset($day_items[$i])): 
+                                    $item = $day_items[$i];
+                                ?>
+                                    <td class="time-cell">
+                                        <?php echo htmlspecialchars($item['time']); ?>
+                                    </td>
+                                    <td class="subject-cell">
+                                        <?php echo htmlspecialchars($item['subject'] ? $item['subject'] : ($item['course_name_legacy'] ?: 'N/A')); ?>
+                                    </td>
+                                    <td>
+                                        <?php echo htmlspecialchars($item['section_name'] . ($item['strand_code'] ? ' (' . $item['strand_code'] . ')' : '')); ?>
+                                    </td>
+                                    <td><?php echo htmlspecialchars($item['class_year'] ?: 'N/A'); ?></td>
+                                <?php else: ?>
+                                    <!-- Empty Row if no schedule -->
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endfor; ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
-        
-        <!-- Quick Summary -->
-        <div style="margin-top: 20px; padding: 15px 20px; background: white; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-            <span style="color: #666; font-size: 0.9rem;">
-                <strong style="color: var(--primary-color);"><?php echo $result->num_rows; ?></strong> class<?php echo $result->num_rows != 1 ? 'es' : ''; ?> scheduled for <?php echo $selected_day; ?>
-            </span>
-            <a href="schedule.php?day=<?php echo $current_day; ?>" class="btn" style="background: var(--primary-color); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 0.85rem;">
-                Go to Today
-            </a>
-        </div>
+
     </div>
 </div>
 
 </body>
 </html>
+

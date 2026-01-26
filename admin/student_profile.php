@@ -29,9 +29,9 @@ if ($result->num_rows == 0) {
 $student = $result->fetch_assoc();
 
 // Fetch student's grades
-$grades_sql = "SELECT g.*, c.course_name as subject
+$grades_sql = "SELECT g.*, sch.subject
                FROM grades g
-               LEFT JOIN courses c ON g.course_id = c.id
+               LEFT JOIN schedules sch ON g.schedule_id = sch.id
                WHERE g.student_id = '$student_id'
                ORDER BY g.id DESC
                LIMIT 10";

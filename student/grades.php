@@ -12,16 +12,16 @@ $student = $s_res->fetch_assoc();
 $student_id = $student['id'];
 
 // Fetch Grades with subject names and teacher information
-// Fetch Grades with subject names and teacher information
 $sql = "SELECT 
-            c.course_name AS subject_name,
+            COALESCE(sch.subject, c.course_name) AS subject_name,
             CONCAT(t.firstname, ' ', t.lastname) AS teacher_name,
-            g.score as grade
+            g.grade
         FROM grades g 
-        LEFT JOIN courses c ON g.course_id = c.id 
+        LEFT JOIN schedules sch ON g.schedule_id = sch.id
+        LEFT JOIN courses c ON sch.course_id = c.id 
         LEFT JOIN teachers t ON g.teacher_id = t.id
         WHERE g.student_id = '$student_id' 
-        ORDER BY c.course_name";
+        ORDER BY subject_name";
 $grades_res = $conn->query($sql);
 
 function getGradeColor($grade) {
