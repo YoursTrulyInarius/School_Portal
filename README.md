@@ -1,87 +1,85 @@
-# School Portal Management System
+# Westprime Horizon School Portal
 
-A comprehensive web-based school management system built with PHP and MySQL. This system facilitates efficient interaction between students, teachers, and administrators.
+Westprime Horizon School Portal is a comprehensive, web-based management system designed to streamline academic operations for administrators, teachers, and students.
 
 > [!NOTE]
-> **Project Status**: 🚧 This project is currently **Ongoing** and under active development.
+> **Project Status**: This system is currently **ongoing** and under active development.
 
-## Key Recent Enhancements
-- **Professional Schedule Redesign**: Teacher schedules now match a premium "paper form" aesthetic, unified into a single weekly view.
-- **Hierarchical Grades System**: Admins can now drill-down from Programs to Sections and Students to view detailed transcripts.
-- **Grade Auto-Conversion**: Implement modern grading logic that automatically calculates point-scale grades from percentage inputs.
-
-## Features
-
-### 🔑 Authentication & Security
-- **Secure Login & Registration**: Role-based access control (Admin, Teacher, Student).
-- **Forgot Password**: OTP-based password reset via email.
-- **Admin Setup**: Script to quickly initialize or reset admin access.
-
-### 🛠 Administrative Module
-- **User Management**: Manage Students, Teachers, and Admin accounts.
-- **Hierarchical Academic Records**: View student grades through a professional multi-level interface.
-- **Schedules**: Manage class schedules and subjects by program and section.
-- **Announcements**: Post and manage school-wide announcements.
-- **Payments**: Track and manage student payments and transactions.
-
-### 👨‍🏫 Teacher Module
-- **Unified Weekly Schedule**: Access a professional, grouped view of all weekly classes.
-- **Smart Grading**: Input grades with automatic percentage-to-point conversion.
-- **Class Implementation**: Manage specific subjects and sections efficiently.
-- **Student Data**: View student details and profiles.
-
-### 👨‍🎓 Student Module
-- **Dashboard**: View announcements and personal performance stats.
-- **Grades Transcript**: Check verified academic performance and teacher feedback.
-- **Subject Loads**: View professional class timetables.
-- **Attendance**: Track attendance records across subjects.
-
-## 💻 Tech Stack
-- **Frontend**: HTML5, CSS3, JavaScript.
-- **Backend**: Native PHP.
-- **Database**: MySQL (MariaDB).
-- **Server**: Apache (via XAMPP).
-
-## 🚀 Installation & Setup
-
-1.  **Clone the Repository**
-    ```bash
-    git clone https://github.com/yourusername/School_Portal.git
-    ```
-    Move the folder to your web server's root directory (e.g., `C:\xampp\htdocs\School_Portal`).
-
-2.  **Database Configuration**
-    - Open **phpMyAdmin**.
-    - Create a new database named `westprime_portal`.
-    - Import the `database.sql` file included in the root directory.
-
-3.  **Configure Connection**
-    - Check `config.php` to ensure database credentials match your local setup:
-      ```php
-      define('DB_SERVER', 'localhost');
-      define('DB_USERNAME', 'root');
-      define('DB_PASSWORD', '');
-      define('DB_NAME', 'westprime_portal');
-      ```
-
-4.  **Initialize Admin Account**
-    - Open your browser and navigate to:
-      `http://localhost/School_Portal/setup_admin.php`
-    - This will create a default admin account.
-
-5.  **Access the Application**
-    - Go to `http://localhost/School_Portal/` to log in.
-
-## 📧 Email Configuration
-For the "Forgot Password" OTP functionality to work, ensure your mail server settings (SMTP) are correctly configured in `forgot_password.php` (uses PHPMailer).
-
-## 📂 Project Structure
-- `/admin` - Admin dashboard files.
-- `/student` - Student dashboard files.
-- `/teacher` - Teacher dashboard files.
-- `/includes` - Shared components (headers, sidebars, etc.).
-- `/uploads` - User uploaded content (profile pics, etc.).
-- `/vendor` - Third-party libraries (PHPMailer, etc.).
+## 👨‍💻 Developer
+Developed by **Sonjeev C. Cabardo**
 
 ---
-*Created for the School Portal Project.*
+
+## 🚀 Features
+
+### For Administrators
+- **User Management**: Create and manage accounts for teachers and students.
+- **Academic Setup**: Manage courses, strands, sections, and subjects.
+- **Enrollment Monitoring**: Process and approve enrollment requests.
+- **Announcements**: Broadcast important updates to the entire school community.
+
+### For Teachers
+- **Schedule Management**: View assigned teaching schedules and rooms.
+- **Grade Entry**: Input and manage student grades for various terms.
+- **Student Tracking**: Monitor student lists per section.
+
+### For Students
+- **Personal Dashboard**: View enrollment status and personal details.
+- **Academic Records**: Check grades and academic progress.
+- **Schedules**: Access class schedules and classroom assignments.
+- **Payments**: Track tuition and miscellaneous fees.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: HTML5, Vanilla CSS3, JavaScript (ES6+)
+- **Backend**: PHP (7.4+)
+- **Database**: MySQL / MariaDB
+- **Server**: XAMPP / Apache
+
+---
+
+## 📦 Installation & Setup
+
+### 1. Prerequisites
+- Install [XAMPP](https://www.apachefriends.org/) or any local PHP/MySQL environment.
+- Git installed on your system.
+
+### 2. Clone the Repository
+```bash
+git clone https://github.com/YoursTrulyInarius/School_Portal.git
+cd School_Portal
+```
+
+### 3. Database Configuration
+1. Open **phpMyAdmin**.
+2. Create a new database named `school_portal`.
+3. Import the `database.sql` file located in the project root.
+
+### 4. Application Setup
+1. Rename `config.example.php` to `config.php`.
+2. Open `config.php` and update your database credentials if necessary:
+   ```php
+   define('DB_SERVER', 'localhost');
+   define('DB_USERNAME', 'root');
+   define('DB_PASSWORD', '');
+   define('DB_NAME', 'school_portal');
+   ```
+
+### 5. Access the Portal
+1. Move the project folder to `C:\xampp\htdocs\`.
+2. Open your browser and navigate to `http://localhost/School_Portal/`.
+
+---
+
+## 🔑 Default Credentials
+
+| Role | Username | Password |
+| :--- | :--- | :--- |
+| **Admin** | `admin` | `admin123` |
+
+---
+
+## 📄 License
+This project is for educational purposes. All rights reserved.

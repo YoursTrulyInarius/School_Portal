@@ -94,7 +94,7 @@ function getGradeColor($grade) {
             --bg-light: #f8fafc;
         }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); margin: 0; }
-        .main-content { padding: 30px; max-width: 1200px; margin: 0 auto; }
+        .main-content { padding: 30px; width: 100%; margin: 0; }
         
         /* Breadcrumbs */
         .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 25px; list-style: none; padding: 0; }
@@ -118,7 +118,7 @@ function getGradeColor($grade) {
         .data-card p { margin: 5px 0 0 0; color: #64748b; font-size: 0.85rem; }
         
         /* Table Styles */
-        .card-table { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .card-table { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow-x: auto; -webkit-overflow-scrolling: touch; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .pro-table { width: 100%; border-collapse: collapse; }
         .pro-table th { background: #f8fafc; text-align: left; padding: 16px 20px; font-weight: 600; color: #64748b; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; }
         .pro-table td { padding: 16px 20px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; color: #334155; }
@@ -249,7 +249,6 @@ function getGradeColor($grade) {
                     <thead>
                         <tr>
                             <th>Subject / Course</th>
-                            <th>Assessment Type</th>
                             <th style="text-align: center;">Grade</th>
                             <th>Instructor</th>
                             <th>Term</th>
@@ -260,7 +259,6 @@ function getGradeColor($grade) {
                             <?php while ($g = $grades_res->fetch_assoc()): ?>
                             <tr>
                                 <td><div style="font-weight: 600;"><?php echo htmlspecialchars($g['subject'] ?: 'Unknown Subject'); ?></div></td>
-                                <td><span style="font-size: 0.8rem; text-transform: uppercase; background: #f1f5f9; padding: 4px 8px; border-radius: 4px;"><?php echo htmlspecialchars($g['grade_type'] ?: 'N/A'); ?></span></td>
                                 <td style="text-align: center;">
                                     <span class="grade-badge" style="background: <?php echo getGradeColor($g['grade']); ?>;">
                                         <?php echo number_format($g['grade'], 2); ?>
@@ -271,7 +269,7 @@ function getGradeColor($grade) {
                             </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
-                            <tr><td colspan="5" style="text-align: center; padding: 60px; color: #64748b;"><div style="font-size: 2rem;">📭</div>No grades have been recorded for this student yet.</td></tr>
+                            <tr><td colspan="4" style="text-align: center; padding: 60px; color: #64748b;"><div style="font-size: 2rem;">📭</div>No grades have been recorded for this student yet.</td></tr>
                         <?php endif; ?>
                     </tbody>
                 </table>

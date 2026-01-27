@@ -1,6 +1,6 @@
 -- Database Creation
-CREATE DATABASE IF NOT EXISTS westprime_portal;
-USE westprime_portal;
+CREATE DATABASE IF NOT EXISTS school_portal;
+USE school_portal;
 
 -- 1. Users Table (Core Authentication)
 CREATE TABLE IF NOT EXISTS users (
@@ -97,14 +97,14 @@ CREATE TABLE IF NOT EXISTS schedules (
 CREATE TABLE IF NOT EXISTS grades (
     id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT NOT NULL,
-    course_id INT NOT NULL,
-    teacher_id INT NOT NULL, -- Record who gave the grade
-    grade_type ENUM('quiz', 'assignment', 'exam', 'final') NOT NULL,
-    score DECIMAL(5,2) NOT NULL,
-    term VARCHAR(20) NOT NULL, -- e.g., '1st Quarter'
+    schedule_id INT NULL,
+    teacher_id INT NULL,
+    grade DECIMAL(3,2) NULL,
+    term VARCHAR(20) NULL,
     date_recorded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+    FOREIGN KEY (schedule_id) REFERENCES schedules(id) ON DELETE CASCADE,
+    FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE SET NULL
 );
 
 -- 8. Attendance Table
@@ -169,3 +169,12 @@ CREATE TABLE IF NOT EXISTS payment_transactions (
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
 );
+
+-- 12. Seed Data
+
+-- 12.1 Default Users
+-- Admin: admin / admin123
+
+INSERT INTO users (username, password, role) VALUES 
+('admin', '$2y$10$IKfc069Ajf6kgzEV2v3XbOslfLJtcXfRywovSyD2.sEFdbWhfiIKa', 'admin')
+ON DUPLICATE KEY UPDATE username=username;

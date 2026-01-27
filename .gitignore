@@ -1,0 +1,43 @@
+# Do NOT commit these files to Git
+# They contain sensitive information or are environment-specific
+
+# Database configuration
+config.php
+
+# Environment files
+.env
+.env.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# User uploaded files (if you have an uploads directory)
+uploads/*
+!uploads/.gitkeep
+
+# Cache directories
+cache/
+tmp/
+
+# Node modules (if you add any frontend tooling later)
+node_modules/
+package-lock.json
+yarn.lock
