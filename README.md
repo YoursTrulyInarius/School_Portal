@@ -4,7 +4,7 @@ Westprime Horizon School Portal is a comprehensive, web-based management system 
 
 > [!NOTE]
 > **Project Status**: This system is currently **ongoing** and under active development.
-> **On going**: Need to update/change the "Schoolarship" function
+> **On going**: Need to update/change the "Schoolarship" function, need to update the responsiveness.
 
 ## 👨‍💻 Developer
 Developed by **Sonjeev C. Cabardo**
