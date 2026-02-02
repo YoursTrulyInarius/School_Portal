@@ -72,6 +72,10 @@ cd School_Portal
 1. Move the project folder to `C:\xampp\htdocs\`.
 2. Open your browser and navigate to `http://localhost/School_Portal/`.
 
+### 6. On Going
+1. Re-designing the "Enrollment form".
+2. enhance "RESPONSIVENESS".
+
 ---
 
 ## 🔑 Default Credentials
