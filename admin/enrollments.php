@@ -150,8 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $mail->isSMTP();
                         $mail->Host = 'smtp.gmail.com';
                         $mail->SMTPAuth = true;
-                        $mail->Username = 'sample@gmail.com'; // Replace with your Gmail
-                        $mail->Password = 'password123';     // Replace with your Gmail App Password
+                        $mail->Username = 'limvic2019@gmail.com'; // Replace with your Gmail
+                        $mail->Password = 'mdmwaxpwfdadzepy';     // Replace with your Gmail App Password
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                         $mail->Port = 587;
 
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         );
 
                         // Recipients
-                        $mail->setFrom('youremail@gmail.com', 'Westprime Horizon Institute');
+                        $mail->setFrom('limvic2019@gmail.com', 'Westprime Horizon Institute');
                         $mail->addAddress($request['email'], $request['firstname'] . ' ' . $request['lastname']);
 
                         // Format class for email (remove Block info)
