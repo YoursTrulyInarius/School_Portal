@@ -125,132 +125,198 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password - Westprime Horizon</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
+<style>
+        :root {
+            --royal-blue: #002366;
+            --royal-blue-light: #003399;
+            --royal-blue-dark: #001a4d;
+            --pure-white: #ffffff;
+            --soft-white: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-premium: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
         body { 
             font-family: 'Poppins', sans-serif; 
-            background: #f4f7f6; 
+            background: radial-gradient(circle at top right, #f8f9fa, #e9ecef);
             display: flex; 
             align-items: center; 
             justify-content: center; 
             min-height: 100vh; 
             margin: 0; 
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
         .reset-container {
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             padding: 20px;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .reset-box { 
-            background: white; 
-            padding: 40px; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-premium);
+            padding: 50px 40px; 
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .reset-box:hover {
+            transform: translateY(-5px);
         }
         
         .logo-container {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
         
         .logo-container img {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            object-fit: cover;
+            border: 4px solid var(--royal-blue);
+            padding: 5px;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: float 4s ease-in-out infinite;
         }
         
         h2 {
-            color: #333;
-            font-weight: 600;
-            margin: 0 0 10px 0;
-            font-size: 1.5rem;
+            color: var(--royal-blue);
+            font-weight: 800;
+            margin: 0 0 15px 0;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
         }
         
         p.subtitle {
-            color: #777;
-            font-size: 0.9rem;
-            margin: 0 0 30px 0;
-            line-height: 1.5;
+            color: #666;
+            font-size: 1rem;
+            margin: 0 0 35px 0;
+            line-height: 1.6;
+            font-weight: 300;
         }
         
         .form-group {
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .form-label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
+            margin-bottom: 10px;
+            font-weight: 600;
             color: #555;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-group:focus-within .form-label {
+            color: var(--royal-blue);
         }
         
         .form-control { 
             width: 100%; 
-            padding: 12px 15px; 
-            border: 1px solid #e1e1e1; 
-            border-radius: 8px; 
-            font-size: 0.95rem;
+            padding: 14px 18px; 
+            border: 2px solid #e9ecef; 
+            border-radius: 12px; 
+            font-size: 1rem;
             box-sizing: border-box; 
-            transition: all 0.2s;
-            background: #f9f9f9;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
         }
         
+        .form-control:hover {
+            border-color: var(--royal-blue-light);
+        }
+
         .form-control:focus {
             outline: none;
-            border-color: #0056b3;
+            border-color: var(--royal-blue);
             background: white;
-            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+            box-shadow: 0 0 0 4px rgba(0, 35, 102, 0.1);
+            transform: scale(1.02);
         }
         
         .btn-primary { 
-            background: linear-gradient(135deg, #0056b3, #0077cc); 
+            background: linear-gradient(135deg, var(--royal-blue), var(--royal-blue-light)); 
             color: white; 
             border: none; 
-            padding: 14px; 
-            border-radius: 8px; 
+            padding: 16px; 
+            border-radius: 12px; 
             width: 100%; 
-            font-size: 1rem; 
+            font-size: 1.1rem; 
             cursor: pointer; 
-            font-weight: 600; 
-            transition: transform 0.1s, box-shadow 0.2s;
+            font-weight: 700; 
+            box-shadow: 0 8px 20px rgba(0, 35, 102, 0.2);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         
         .btn-primary:hover { 
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 35, 102, 0.3);
+            background: linear-gradient(135deg, var(--royal-blue-light), var(--royal-blue));
         }
         
         .btn-primary:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
         
         .back-link {
             display: inline-block;
-            margin-top: 25px;
-            color: #666;
+            margin-top: 35px;
+            color: var(--royal-blue);
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
+            font-size: 0.95rem;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            padding-top: 20px;
+            border-top: 1px solid #edf2f7;
+            width: 100%;
         }
         
-        .back-link:hover {
-            color: #0056b3;
+        .back-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--royal-blue);
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover::after {
+            width: 30%;
         }
         
         .alert { 
-            padding: 12px; 
-            margin-bottom: 20px; 
-            border-radius: 8px; 
-            font-size: 0.9rem; 
+            padding: 15px; 
+            margin-bottom: 25px; 
+            border-radius: 10px; 
+            font-size: 0.95rem; 
             text-align: left;
+            border: none;
         }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-success { background: rgba(40, 167, 69, 0.1); color: #155724; border-left: 4px solid #28a745; }
+        .alert-error { background: rgba(220, 53, 69, 0.1); color: #721c24; border-left: 4px solid #dc3545; }
     </style>
 </head>
 <body>

@@ -66,117 +66,210 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Student Enrollment - Westprime Horizon</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
+<style>
+        :root {
+            --royal-blue: #002366;
+            --royal-blue-light: #003399;
+            --royal-blue-dark: #001a4d;
+            --pure-white: #ffffff;
+            --soft-white: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-premium: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            background: linear-gradient(135deg, var(--royal-blue-dark), var(--royal-blue));
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
+            overflow-x: hidden;
         }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
         .enrollment-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 600px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-premium);
+            max-width: 700px;
             width: 100%;
-            padding: 40px;
+            padding: 50px 40px;
+            animation: fadeInUp 0.8s ease-out;
+            transition: transform 0.3s ease;
         }
+
+        .enrollment-container:hover {
+            transform: translateY(-5px);
+        }
+
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
+
         .header img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
             border-radius: 50%;
-            border: 3px solid #3498db;
+            border: 4px solid var(--royal-blue);
+            padding: 5px;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: float 4s ease-in-out infinite;
         }
+
         .header h1 {
-            color: #3498db;
-            font-size: 2rem;
+            color: var(--royal-blue);
+            font-size: 2.5rem;
             margin-bottom: 10px;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
+
         .header p {
             color: #666;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
+            font-weight: 300;
         }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
+
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
         }
+
+        .form-group:focus-within label {
+            color: var(--royal-blue);
+        }
+
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            padding: 14px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
-            transition: border 0.3s;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #fff;
         }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: var(--royal-blue-light);
+        }
+
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #3498db;
+            border-color: var(--royal-blue);
+            box-shadow: 0 0 0 4px rgba(0, 35, 102, 0.1);
+            transform: scale(1.01);
         }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+
         .btn-submit {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            padding: 18px;
+            background: linear-gradient(135deg, var(--royal-blue), var(--royal-blue-light));
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 35, 102, 0.2);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            margin-top: 10px;
         }
+
         .btn-submit:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 35, 102, 0.3);
+            background: linear-gradient(135deg, var(--royal-blue-light), var(--royal-blue));
         }
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 500;
+
+        .btn-submit:active {
+            transform: translateY(-1px);
         }
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
+
         .back-link {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #edf2f7;
         }
+
         .back-link a {
-            color: #3498db;
+            color: var(--royal-blue);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .back-link a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--royal-blue);
+            transition: width 0.3s ease;
+        }
+
+        .back-link a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .enrollment-container {
+                padding: 30px 20px;
+            }
         }
     </style>
+
 </head>
 <body>
 
