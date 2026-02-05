@@ -21,37 +21,41 @@ $error = '';
 // Handle Form Submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    // Handle Image Upload (separate from profile update)
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+        $filename = $_FILES['profile_image']['name'];
+        $filesize = $_FILES['profile_image']['size'];
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+        if (!in_array($ext, $allowed)) {
+            $error = "Invalid file format. JPG, PNG, GIF only.";
+        } elseif ($filesize > 5242880) { // 5MB
+            $error = "File too large. Max 5MB.";
+        } else {
+            $new_filename = "teacher_" . $teacher_user_id . "_" . time() . "." . $ext;
+            $upload_path = "../uploads/profiles/" . $new_filename;
+            
+            // Create dir if needed
+            if (!file_exists("../uploads/profiles/")) mkdir("../uploads/profiles/", 0777, true);
+
+            if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_path)) {
+                $conn->query("UPDATE teachers SET profile_image='$new_filename' WHERE id='$teacher_id'");
+                $teacher['profile_image'] = $new_filename;
+                $msg = "Profile photo updated successfully!";
+                // Refresh to show new image
+                header("Location: profile.php?updated=1");
+                exit();
+            } else {
+                $error = "Failed to upload image.";
+            }
+        }
+    }
+
     // Update Personal Profile
     if (isset($_POST['update_profile'])) {
         $address = clean_input($_POST['address']);
         $contact = clean_input($_POST['contact']);
-
-        // Handle Image Upload
-        if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
-            $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-            $filename = $_FILES['profile_image']['name'];
-            $filesize = $_FILES['profile_image']['size'];
-            $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-
-            if (!in_array($ext, $allowed)) {
-                $error = "Invalid file format. JPG, PNG, GIF only.";
-            } elseif ($filesize > 5242880) { // 5MB
-                $error = "File too large. Max 5MB.";
-            } else {
-                $new_filename = "teacher_" . $teacher_user_id . "_" . time() . "." . $ext;
-                $upload_path = "../uploads/profiles/" . $new_filename;
-                
-                // Create dir if needed
-                if (!file_exists("../uploads/profiles/")) mkdir("../uploads/profiles/", 0777, true);
-
-                if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_path)) {
-                    $conn->query("UPDATE teachers SET profile_image='$new_filename' WHERE id='$teacher_id'");
-                    $teacher['profile_image'] = $new_filename; 
-                } else {
-                    $error = "Failed to upload image.";
-                }
-            }
-        }
 
         if (empty($error)) {
             $update_sql = "UPDATE teachers SET address='$address', contact_number='$contact' WHERE id='$teacher_id'";
@@ -172,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="profile_image_input" style="position: absolute; bottom: 15px; right: 0; background: var(--secondary-color); color: white; padding: 8px; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" title="Change Photo">
                                 📷
                             </label>
-                            <input type="file" name="profile_image" id="profile_image_input" style="display: none;" accept="image/*" onchange="this.form.submit()">
+                            <input type="file" name="profile_image" id="profile_image_input" style="display: none;" accept="image/*" onchange="submitImageUpload(this)">
                         </div>
                         <h3><?php echo htmlspecialchars($teacher['firstname'] . ' ' . $teacher['lastname']); ?></h3>
                         <p style="color: #666; font-weight: 500;">Faculty / Teacher</p>
@@ -243,6 +247,13 @@ function togglePassword(inputId) {
         input.type = "text";
     } else {
         input.type = "password";
+    }
+}
+
+function submitImageUpload(input) {
+    if (input.files && input.files[0]) {
+        // Submit the form when image is selected
+        input.form.submit();
     }
 }
 </script>

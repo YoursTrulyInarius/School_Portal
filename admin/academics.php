@@ -226,7 +226,7 @@ $result_sections = $conn->query($sql_sections);
         .data-table th {
             padding: 12px;
             text-align: left;
-            background: #0056b3;
+            background: #4169E1;
             color: white;
             font-weight: 600;
         }
@@ -251,7 +251,7 @@ $result_sections = $conn->query($sql_sections);
         }
 
         .btn-primary {
-            background: #0056b3;
+            background: #4169E1;
             color: white;
         }
 
@@ -364,7 +364,7 @@ $result_sections = $conn->query($sql_sections);
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                 <!-- COLLEGE COURSES LIST -->
                 <div class="card">
-                    <h3 style="margin: 0 0 20px 0; color: #0056b3;">🎓 College Courses</h3>
+                    <h3 style="margin: 0 0 20px 0; color: #4169E1;">🎓 College Courses</h3>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -479,7 +479,7 @@ $result_sections = $conn->query($sql_sections);
                     <div id="sectionPreview"
                         style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: none; text-align: center; border: 1px dashed #2196f3;">
                         <span style="color: #555; font-size: 0.9rem;">New Section Name:</span><br>
-                        <strong id="previewText" style="color: #0056b3; font-size: 1.2rem;"></strong>
+                        <strong id="previewText" style="color: #4169E1; font-size: 1.2rem;"></strong>
                     </div>
                     <button type="submit" name="save_section" class="btn btn-success">Save Section</button>
                 </form>
@@ -502,7 +502,7 @@ $result_sections = $conn->query($sql_sections);
                         <?php if ($result_sections->num_rows > 0): ?>
                             <?php while ($section = $result_sections->fetch_assoc()): ?>
                                 <tr>
-                                    <td style="font-weight: 600; color: #0056b3;">
+                                    <td style="font-weight: 600; color: #4169E1;">
                                         <?php echo htmlspecialchars($section['code']); ?> -
                                         <?php echo htmlspecialchars($section['name']); ?></td>
                                     <td><?php echo htmlspecialchars($section['grade_level']); ?></td>

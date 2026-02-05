@@ -68,7 +68,7 @@ $result = $conn->query($sql);
         }
         .page-header h2 {
             margin: 0;
-            color: #0056b3;
+            color: #4169E1;
             font-size: 1.5rem;
         }
         
@@ -109,9 +109,9 @@ $result = $conn->query($sql);
         .data-table th {
             padding: 15px;
             text-align: left;
-            background: #0056b3; /* Darker background for visibility */
+            background: #4169E1; /* Darker background for visibility */
             color: white; /* White text for contrast */
-            border-bottom: 2px solid #004494;
+            border-bottom: 2px solid #4169E1;
             font-weight: 600;
             font-size: 0.95rem;
             white-space: nowrap;
@@ -153,7 +153,7 @@ $result = $conn->query($sql);
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            background: linear-gradient(135deg, #0056b3, #0077cc);
+            background: #4169E1;
             color: white;
             border: none;
             border-radius: 8px;
@@ -248,7 +248,7 @@ $result = $conn->query($sql);
             <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <table style="width: 100%; border-collapse: collapse; min-width: 480px;">
                 <thead>
-                    <tr style="background: #0056b3; border-bottom: 2px solid #004494;">
+                    <tr style="background: #4169E1; border-bottom: 2px solid #4169E1;">
                         <th style="padding: 12px 10px; text-align: left; color: white; font-weight: 600;">User</th>
                         <th style="padding: 12px 10px; text-align: left; color: white; font-weight: 600;">Role</th>
                         <th style="padding: 12px 10px; text-align: left; color: white; font-weight: 600;">Email</th>

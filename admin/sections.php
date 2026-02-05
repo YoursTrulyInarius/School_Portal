@@ -37,7 +37,7 @@ $result = $conn->query($sql);
         <div class="card" style="padding: 0; overflow: hidden;">
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
-                    <tr style="background: #0056b3; border-bottom: 2px solid #004494;">
+                    <tr style="background: #4169E1; border-bottom: 2px solid #4169E1;">
                         <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Grade Level</th>
                         <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Section Name</th>
                         <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Adviser</th>

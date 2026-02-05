@@ -14,7 +14,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         top: 15px;
         left: 15px;
         z-index: 99999;
-        background: linear-gradient(135deg, #0056b3, #0077cc);
+        background: #4169E1;
         color: white;
         border: none;
         border-radius: 12px;
@@ -31,7 +31,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     .mobile-menu-toggle:hover,
     .mobile-menu-toggle:active {
-        background: linear-gradient(135deg, #004494, #0056b3);
+        background: #4169E1;
         transform: scale(1.05);
     }
 
@@ -59,7 +59,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     /* Sidebar */
     .sidebar {
         width: 260px;
-        background: linear-gradient(180deg, #0056b3, #004494);
+        background: #4169E1;
         color: white;
         position: fixed;
         height: 100vh;

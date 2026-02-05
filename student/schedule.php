@@ -47,7 +47,7 @@ $result = $conn->query($sch_sql);
         }
 
         .page-title {
-            color: #0056b3;
+            color: #4169E1;
             font-size: 1.5rem;
             margin: 0 0 20px 0;
             font-weight: 600;
@@ -72,7 +72,7 @@ $result = $conn->query($sch_sql);
         }
 
         .data-table thead tr {
-            background: linear-gradient(135deg, #0056b3, #0077cc);
+            background: #4169E1;
         }
 
         .data-table th {
@@ -95,7 +95,7 @@ $result = $conn->query($sch_sql);
 
         .subject-name {
             font-weight: 600;
-            color: #0056b3;
+            color: #4169E1;
         }
 
         .day-badge {

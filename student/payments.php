@@ -72,7 +72,7 @@ function getStatusBadgeClass($status)
         }
 
         .page-title {
-            color: #0056b3;
+            color: #4169E1;
             font-size: 1.5rem;
             margin: 0 0 20px 0;
             font-weight: 600;
@@ -140,7 +140,7 @@ function getStatusBadgeClass($status)
 
         /* Payment Instructions */
         .payment-notice {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #4169E1;
             color: white;
             border-radius: 12px;
             padding: 25px;
@@ -179,7 +179,7 @@ function getStatusBadgeClass($status)
         }
 
         .card-header {
-            background: linear-gradient(135deg, #0056b3, #0077cc);
+            background: #4169E1;
             color: white;
             padding: 20px 25px;
             font-size: 1.1rem;
@@ -405,7 +405,7 @@ function getStatusBadgeClass($status)
                             <div class="mobile-card">
                                 <div
                                     style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                                    <div style="font-weight: 600; color: #0056b3;">
+                                    <div style="font-weight: 600; color: #4169E1;">
                                         <?php echo htmlspecialchars($transaction['payment_type']); ?>
                                     </div>
                                     <span class="status-badge <?php echo getStatusBadgeClass($transaction['status']); ?>"

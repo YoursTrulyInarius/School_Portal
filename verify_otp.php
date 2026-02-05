@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         
         <div style="margin-top: 20px;">
-            <a href="forgot_password.php" style="color: #0056b3; text-decoration: none; font-size: 0.9rem;">Resend Code</a>
+            <a href="forgot_password.php" style="color: #4169E1; text-decoration: none; font-size: 0.9rem;">Resend Code</a>
         </div>
     </div>
 </body>

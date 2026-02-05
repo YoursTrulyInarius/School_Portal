@@ -57,7 +57,7 @@ $days_with_classes = count($unique_days);
         
         /* Welcome Header */
         .welcome-header {
-            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            background: #ffffff;
             padding: 20px 24px;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -66,7 +66,7 @@ $days_with_classes = count($unique_days);
         }
         .welcome-header h2 {
             margin: 0 0 6px 0;
-            color: #0056b3;
+            color: #4169E1;
             font-size: 1.4rem;
         }
         .welcome-header p {
@@ -84,14 +84,14 @@ $days_with_classes = count($unique_days);
         
         /* Stats Card */
         .stats-card {
-            background: linear-gradient(135deg, #0056b3, #0077cc);
+            background: #4169E1;
             color: white;
             padding: 24px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
         }
         .stats-card.green {
-            background: linear-gradient(135deg, #28a745, #34c759);
+            background: #28a745;
             box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
         }
         .stats-card h3 {
@@ -117,10 +117,10 @@ $days_with_classes = count($unique_days);
             padding: 24px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            border-left: 4px solid #0056b3;
+            border-left: 4px solid #4169E1;
         }
         .card h3 {
-            color: #0056b3;
+            color: #4169E1;
             font-size: 1.15rem;
             margin: 0 0 15px 0;
         }
@@ -145,7 +145,7 @@ $days_with_classes = count($unique_days);
             padding-bottom: 0;
         }
         .announcement-title {
-            color: #0056b3;
+            color: #4169E1;
             font-weight: 600;
         }
         .announcement-date {
@@ -167,7 +167,7 @@ $days_with_classes = count($unique_days);
         .btn {
             display: inline-block;
             padding: 12px 24px;
-            background: linear-gradient(135deg, #0056b3, #0077cc);
+            background: #4169E1;
             color: white;
             border: none;
             border-radius: 10px;
@@ -178,7 +178,7 @@ $days_with_classes = count($unique_days);
             transition: all 0.3s;
         }
         .btn:hover {
-            background: linear-gradient(135deg, #004494, #0056b3);
+            background: #4169E1;
             transform: translateY(-2px);
             color: white;
         }

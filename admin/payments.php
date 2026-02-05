@@ -174,7 +174,7 @@ $result = $conn->query($sql);
         <div class="card" style="padding: 0; overflow: hidden;">
             <table class="payment-table" style="width: 100%; border-collapse: collapse;">
                 <thead>
-                    <tr style="background: #0056b3; border-bottom: 2px solid #004494;">
+                    <tr style="background: #4169E1; border-bottom: 2px solid #4169E1;">
                         <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Student Name</th>
                         <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Total Fee</th>
                         <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Amount Paid</th>

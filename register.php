@@ -81,9 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
     :root {
-        --royal-blue: #002366;
-        --royal-blue-light: #003399;
-        --royal-blue-dark: #001a4d;
+        --royal-blue: #4169E1;
+        --royal-blue-light: #4169E1;
+        --royal-blue-dark: #4169E1;
         --pure-white: #ffffff;
         --soft-white: #f8f9fa;
         --glass-bg: rgba(255, 255, 255, 0.9);
@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .auth-sidebar {
-        background: linear-gradient(135deg, var(--royal-blue), var(--royal-blue-light)) !important;
+        background: var(--royal-blue) !important;
         flex: 1.2 !important;
         display: flex;
         align-items: center;
@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         position: absolute;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+        background: transparent;
         top: -50%;
         left: -50%;
         animation: rotate 20s linear infinite;
@@ -160,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .auth-panel {
-        background: radial-gradient(circle at top right, #f8f9fa, #e9ecef);
+        background: #f8f9fa;
         animation: fadeInUp 0.8s ease-out;
         flex: 1;
         display: flex;
@@ -228,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .btn-block {
-        background: linear-gradient(135deg, var(--royal-blue), var(--royal-blue-light)) !important;
+        background: var(--royal-blue) !important;
         border: none;
         height: 55px;
         border-radius: 12px !important;
@@ -244,7 +244,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .btn-block:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 25px rgba(0, 35, 102, 0.3);
-        background: linear-gradient(135deg, var(--royal-blue-light), var(--royal-blue)) !important;
+        background: var(--royal-blue) !important;
     }
 
     .password-wrapper button:hover {

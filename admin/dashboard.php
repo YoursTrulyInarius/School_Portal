@@ -33,7 +33,7 @@ $total_courses = $conn->query("SELECT count(*) as count FROM courses")->fetch_as
         }
         .welcome-header h2 {
             margin: 0;
-            color: #0056b3;
+            color: #4169E1;
             font-size: 1.5rem;
         }
         .user-info {
@@ -44,7 +44,7 @@ $total_courses = $conn->query("SELECT count(*) as count FROM courses")->fetch_as
         .user-avatar {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #0056b3, #0077cc);
+            background: #4169E1;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -69,7 +69,7 @@ $total_courses = $conn->query("SELECT count(*) as count FROM courses")->fetch_as
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             border-left: 5px solid #17a2b8;
         }
-        .stat-card.blue { border-left-color: #0056b3; }
+        .stat-card.blue { border-left-color: #4169E1; }
         .stat-card.green { border-left-color: #28a745; }
         
         .stat-card h3 {
@@ -117,7 +117,7 @@ $total_courses = $conn->query("SELECT count(*) as count FROM courses")->fetch_as
             color: inherit;
             text-align: center;
             transition: transform 0.2s, box-shadow 0.2s;
-            border-left: 4px solid #0056b3;
+            border-left: 4px solid #4169E1;
         }
         .quick-card:hover {
             transform: translateY(-3px);
@@ -196,7 +196,7 @@ $total_courses = $conn->query("SELECT count(*) as count FROM courses")->fetch_as
             <div class="stat-card blue">
                 <h3>Total Teachers</h3>
                 <p class="number"><?php echo $total_teachers; ?></p>
-                <a href="users.php?role=teacher" class="btn-link" style="color: #0056b3; border-color: #0056b3;">View Details →</a>
+                <a href="users.php?role=teacher" class="btn-link" style="color: #4169E1; border-color: #4169E1;">View Details →</a>
             </div>
             <div class="stat-card green">
                 <h3>Active Courses</h3>

@@ -180,19 +180,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $mail->Subject = 'Enrollment Approved - Westprime Horizon Institute';
                         $mail->Body = "
                             <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
-                                <div style='text-align: center; padding: 20px; background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);'>
+                                <div style='text-align: center; padding: 20px; background: #4169E1;'>
                                     <img src='cid:school_logo' alt='Westprime Horizon Logo' style='width: 100px; height: 100px; border-radius: 50%; border: 3px solid white;'>
                                     <h1 style='color: white; margin: 15px 0 5px 0;'>Westprime Horizon Institute</h1>
                                     <p style='color: white; margin: 0; opacity: 0.9;'>Enrollment Confirmation</p>
                                 </div>
                                 
                                 <div style='padding: 30px; background: white;'>
-                                    <h2 style='color: #3498db; margin-top: 0;'>🎉 Congratulations! Your Enrollment is Approved</h2>
+                                    <h2 style='color: #4169E1; margin-top: 0;'>🎉 Congratulations! Your Enrollment is Approved</h2>
                                     <p>Dear {$request['firstname']} {$request['lastname']},</p>
                                     <p>We are pleased to inform you that your enrollment request has been approved. Welcome to Westprime Horizon Institute!</p>
                                     
-                                    <div style='background: #f0f8ff; padding: 20px; border-left: 4px solid #3498db; margin: 20px 0; border-radius: 4px;'>
-                                        <h3 style='color: #2980b9; margin-top: 0;'>Your Login Credentials</h3>
+                                    <div style='background: #f0f8ff; padding: 20px; border-left: 4px solid #4169E1; margin: 20px 0; border-radius: 4px;'>
+                                        <h3 style='color: #4169E1; margin-top: 0;'>Your Login Credentials</h3>
                                         <p style='margin: 10px 0;'><strong>Username:</strong> <code style='background: #e3f2fd; padding: 4px 8px; border-radius: 3px; color: #1976d2;'>{$username}</code></p>
                                         <p style='margin: 10px 0;'><strong>Password:</strong> <code style='background: #e3f2fd; padding: 4px 8px; border-radius: 3px; color: #1976d2;'>{$password}</code></p>
                                         <p style='margin: 10px 0;'><strong>Class:</strong> <code style='background: #e3f2fd; padding: 4px 8px; border-radius: 3px; color: #1976d2;'>{$class_display}</code></p>
@@ -200,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     
                                     <p>You can now access the student portal using the link below:</p>
                                     <div style='text-align: center; margin: 25px 0;'>
-                                        <a href='" . BASE_URL . "login.php' style='background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;'>Login to Student Portal</a>
+                                        <a href='" . BASE_URL . "login.php' style='background: #4169E1; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;'>Login to Student Portal</a>
                                     </div>
                                     
                                     <div style='background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 4px; margin: 20px 0;'>
@@ -264,7 +264,7 @@ $requests = $conn->query($requests_sql);
         }
 
         .page-title {
-            color: #0056b3;
+            color: #4169E1;
             font-size: 1.5rem;
             margin: 0 0 25px 0;
         }
@@ -434,7 +434,7 @@ $requests = $conn->query($requests_sql);
                 <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
                     <table style="width: 100%; border-collapse: collapse; min-width: 700px;">
                         <thead>
-                            <tr style="background: #0056b3; border-bottom: 2px solid #004494;">
+                            <tr style="background: #4169E1; border-bottom: 2px solid #4169E1;">
                                 <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Name</th>
                                 <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Email</th>
                                 <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Grade Level

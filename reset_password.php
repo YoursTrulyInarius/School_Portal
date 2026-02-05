@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         .btn-primary { 
-            background: linear-gradient(135deg, #2ecc71, #27ae60); 
+            background: #28a745; 
             color: white; 
             border: none; 
             padding: 14px; 

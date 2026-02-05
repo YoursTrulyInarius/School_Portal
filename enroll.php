@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
         :root {
-            --royal-blue: #002366;
-            --royal-blue-light: #003399;
-            --royal-blue-dark: #001a4d;
+            --royal-blue: #4169E1;
+            --royal-blue-light: #4169E1;
+            --royal-blue-dark: #4169E1;
             --pure-white: #ffffff;
             --soft-white: #f8f9fa;
             --glass-bg: rgba(255, 255, 255, 0.9);
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--royal-blue-dark), var(--royal-blue));
+            background: var(--royal-blue);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .btn-submit {
             width: 100%;
             padding: 18px;
-            background: linear-gradient(135deg, var(--royal-blue), var(--royal-blue-light));
+            background: var(--royal-blue);
             color: white;
             border: none;
             border-radius: 12px;
@@ -219,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .btn-submit:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(0, 35, 102, 0.3);
-            background: linear-gradient(135deg, var(--royal-blue-light), var(--royal-blue));
+            background: var(--royal-blue);
         }
 
         .btn-submit:active {

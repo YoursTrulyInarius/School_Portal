@@ -56,7 +56,7 @@ $schedules = $conn->query($schedules_sql);
         }
 
         .profile-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             color: white;
             padding: 30px;
             border-radius: 8px;

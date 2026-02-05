@@ -46,7 +46,7 @@ $balance = $student['total_fee'] - $total_paid;
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }
         .summary-card {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             color: white;
             padding: 25px;
             border-radius: 8px;

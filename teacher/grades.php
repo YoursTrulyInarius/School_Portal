@@ -275,7 +275,7 @@ function getGradeColor($grade) {
             <div class="card" style="padding: 0; overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse;">
                     <thead>
-                        <tr style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                        <tr style="background: #4169E1;">
                             <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">LRN</th>
                             <th style="padding: 15px; text-align: left; color: white; font-weight: 600;">Student Name</th>
                             <th style="padding: 15px; text-align: center; color: white; font-weight: 600;">Current Grade</th>

@@ -73,7 +73,7 @@ $valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
             background: white;
             padding: 30px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            border-top: 5px solid #0056b3;
+            border-top: 5px solid #4169E1;
         }
 
         /* Header Section */
@@ -175,7 +175,7 @@ $valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
 
         .subject-cell {
             font-weight: 600;
-            color: #0056b3;
+            color: #4169E1;
         }
 
         .time-cell {
@@ -195,7 +195,7 @@ $valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
     }
     
     .mobile-day-header {
-        background: #0056b3;
+        background: #4169E1;
         color: white;
         padding: 10px 15px;
         font-weight: 700;
@@ -225,7 +225,7 @@ $valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
     .mobile-subject {
         font-size: 1rem;
         font-weight: 600;
-        color: #0056b3;
+        color: #4169E1;
         margin-bottom: 8px;
     }
     

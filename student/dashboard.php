@@ -135,7 +135,7 @@ $class_display = ($student['grade_level'] && $student['section_name'])
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: #0056b3;
+            background: #4169E1;
             border: 2px solid white;
         }
 
@@ -197,7 +197,7 @@ $class_display = ($student['grade_level'] && $student['section_name'])
                         </p>
                     </div>
                     <div
-                        style="font-size: 0.9rem; background: rgba(0,86,179,0.05); padding: 8px 15px; border-radius: 20px; color: #0056b3; font-weight: 500;">
+                        style="font-size: 0.9rem; background: rgba(0,86,179,0.05); padding: 8px 15px; border-radius: 20px; color: #4169E1; font-weight: 500;">
                         📅 <?php echo date('l, F j, Y'); ?>
                     </div>
                 </div>

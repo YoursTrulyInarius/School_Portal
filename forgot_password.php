@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->Subject = 'Password Reset Verification Code - Westprime Horizon';
                 $mail->Body    = "
                     <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
-                        <div style='text-align: center; padding: 20px; background: linear-gradient(135deg, #0056b3 0%, #004494 100%);'>
+                        <div style='text-align: center; padding: 20px; background: #4169E1;'>
                             <img src='cid:school_logo' alt='Westprime Logo' style='width: 80px; height: 80px; border-radius: 50%; border: 3px solid white;'>
                             <h2 style='color: white; margin: 10px 0 0 0;'>Westprime Horizon Institute</h2>
                         </div>
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <p style='color: #555;'>We received a request to reset your password. Please use the following code to verify your identity:</p>
                             
                             <div style='background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center; margin: 25px 0;'>
-                                <span style='font-size: 32px; font-weight: bold; color: #0056b3; letter-spacing: 5px;'>$otp</span>
+                                <span style='font-size: 32px; font-weight: bold; color: #4169E1; letter-spacing: 5px;'>$otp</span>
                             </div>
                             
                             <p style='color: #555;'>This code will expire in 15 minutes.</p>
@@ -127,9 +127,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
         :root {
-            --royal-blue: #002366;
-            --royal-blue-light: #003399;
-            --royal-blue-dark: #001a4d;
+            --royal-blue: #4169E1;
+            --royal-blue-light: #4169E1;
+            --royal-blue-dark: #4169E1;
             --pure-white: #ffffff;
             --soft-white: #f8f9fa;
             --glass-bg: rgba(255, 255, 255, 0.9);
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         body { 
             font-family: 'Poppins', sans-serif; 
-            background: radial-gradient(circle at top right, #f8f9fa, #e9ecef);
+            background: #f8f9fa;
             display: flex; 
             align-items: center; 
             justify-content: center; 
@@ -254,7 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         .btn-primary { 
-            background: linear-gradient(135deg, var(--royal-blue), var(--royal-blue-light)); 
+            background: var(--royal-blue); 
             color: white; 
             border: none; 
             padding: 16px; 
@@ -270,7 +270,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .btn-primary:hover { 
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(0, 35, 102, 0.3);
-            background: linear-gradient(135deg, var(--royal-blue-light), var(--royal-blue));
+            background: var(--royal-blue);
         }
         
         .btn-primary:active {

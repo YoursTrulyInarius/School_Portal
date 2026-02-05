@@ -2,9 +2,9 @@
 /* Mobile-First Responsive Design */
 
 :root {
-    --primary-color: #0056b3;
-    --primary-dark: #004494;
-    --primary-light: #3378c2;
+    --primary-color: #4169E1;
+    --primary-dark: #4169E1;
+    --primary-light: #4169E1;
     --secondary-color: #17a2b8;
     --accent-color: #ffffff;
     --text-color: #333333;
@@ -54,7 +54,7 @@ a:hover {
 .btn {
     display: inline-block;
     padding: 12px 24px;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    background: var(--primary-color);
     color: white;
     border: none;
     border-radius: var(--border-radius);
@@ -67,7 +67,7 @@ a:hover {
 }
 
 .btn:hover {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    background: var(--primary-color);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 86, 179, 0.35);
     color: white;
@@ -143,7 +143,7 @@ a:hover {
 
 .auth-sidebar {
     flex: 1.2;
-    background: linear-gradient(135deg, #0056b3, #00a8cc);
+    background: #4169E1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -160,7 +160,7 @@ a:hover {
     position: absolute;
     width: 150%;
     height: 150%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    background: transparent;
     top: -50%;
     left: -50%;
     animation: rotate 60s linear infinite;
@@ -297,7 +297,7 @@ a:hover {
 /* Sidebar */
 .sidebar {
     width: 260px;
-    background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
+    background: var(--primary-color);
     color: white;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
     display: flex;
@@ -370,7 +370,7 @@ a:hover {
 /* WELCOME HEADER        */
 /* ===================== */
 .welcome-header {
-    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    background: #ffffff;
     padding: 22px 25px;
     border-radius: var(--border-radius);
     margin-bottom: 25px;
@@ -457,7 +457,7 @@ td {
 }
 
 th {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    background: var(--primary-color);
     color: white;
     font-weight: 600;
     font-size: 0.9rem;
@@ -476,7 +476,7 @@ tr:hover td {
 /* SCHEDULE HEADER       */
 /* ===================== */
 .schedule-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    background: var(--primary-color);
     color: white;
     padding: 25px;
     border-radius: var(--border-radius);

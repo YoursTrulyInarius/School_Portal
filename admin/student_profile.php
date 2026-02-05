@@ -48,7 +48,7 @@ $grades = $conn->query($grades_sql);
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }
         .profile-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            background: var(--primary-color);
             color: white;
             padding: 30px;
             border-radius: 8px;

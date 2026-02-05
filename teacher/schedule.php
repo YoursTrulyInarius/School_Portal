@@ -64,7 +64,7 @@ $valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
             background: white;
             padding: 30px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            border-top: 5px solid #0056b3;
+            border-top: 5px solid #4169E1;
         }
 
         /* Header Section */
@@ -166,7 +166,7 @@ $valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
 
         .subject-cell {
             font-weight: 600;
-            color: #0056b3;
+            color: #4169E1;
         }
 
         .time-cell {

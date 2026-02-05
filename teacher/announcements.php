@@ -24,7 +24,7 @@ $result = $conn->query($sql);
         body { font-family: 'Poppins', sans-serif; background-color: #f0f4f8; margin: 0; }
         
         .page-title {
-            color: #0056b3;
+            color: #4169E1;
             font-size: 1.5rem;
             margin: 0 0 20px 0;
         }
@@ -49,7 +49,7 @@ $result = $conn->query($sql);
         }
         
         .announcement-title {
-            color: #004494;
+            color: #4169E1;
             margin: 0 0 5px 0;
             font-size: 1.1rem;
         }
