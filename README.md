@@ -85,7 +85,7 @@ cd School_Portal
 | **Admin** | `admin` | `admin123` |
 
 ---
-## PROGRESS 6. 92%.
+## PROGRESS: 92%.
 
 ## 📄 License
 This project is for educational purposes. All rights reserved.
