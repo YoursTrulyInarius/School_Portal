@@ -85,7 +85,5 @@ cd School_Portal
 | **Admin** | `admin` | `admin123` |
 
 ---
-## PROGRESS: 
-
 ## 📄 License
 This project is for educational purposes. All rights reserved.
