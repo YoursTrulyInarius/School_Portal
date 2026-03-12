@@ -84,5 +84,4 @@ cd School_Portal
 | :--- | :--- | :--- |
 | **Admin** | `admin` | `admin123` |
 
----
-## 📄 License
+
