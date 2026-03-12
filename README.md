@@ -86,4 +86,3 @@ cd School_Portal
 
 ---
 ## 📄 License
-This project is for educational purposes. All rights reserved.
