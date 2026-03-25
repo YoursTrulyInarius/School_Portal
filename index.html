@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Portal Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #ec4899;
+            --dark: #111827;
+            --light: #f3f4f6;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0e7ff 50%, #fae8ff 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .background-blobs {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: move 10s infinite alternate;
+        }
+
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #c7d2fe; }
+        .blob-2 { bottom: -10%; right: -10%; width: 600px; height: 600px; background: #fbcfe8; }
+        .blob-3 { top: 40%; left: 40%; width: 400px; height: 400px; background: #dcfce7; }
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(50px, -50px) scale(1.1); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Role Selection */
+        #role-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+        }
+
+        .role-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .role-header p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 3rem;
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .role-card {
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            background: white;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.15);
+        }
+
+        .role-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-card p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Common */
+        .dashboard {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 2rem;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logout-btn {
+            padding: 0.6rem 1.2rem;
+            background: white;
+            color: #ef4444;
+            border: 1px solid #fee2e2;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            padding: 1.5rem;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #e0e7ff;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info p {
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        th {
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            font-weight: 500;
+        }
+
+        .badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge.success { background: #dcfce7; color: #166534; }
+        .badge.warning { background: #fef9c3; color: #854d0e; }
+        .badge.info { background: #dbeafe; color: #1e40af; }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        
+        <!-- Role Selection -->
+        <div id="role-selection">
+            <div class="role-header">
+                <h1>School Portal</h1>
+                <p>Welcome to the unified campus management system. Select a role to preview.</p>
+            </div>
+            
+            <div class="roles-grid">
+                <div class="glass-panel role-card" onclick="showDashboard('admin')">
+                    <div class="role-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2>Administrator</h2>
+                    <p>Manage users, system settings, and institutional overrides.</p>
+                </div>
+                
+                <div class="glass-panel role-card" onclick="showDashboard('teacher')">
+                    <div class="role-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h2>Teacher</h2>
+                    <p>Manage classes, assignments, grades, and student progress.</p>
+                </div>
+
+                <div class="glass-panel role-card" onclick="showDashboard('student')">
+                    <div class="role-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h2>Student</h2>
+                    <p>Access courses, assignments, grades, and schedules.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard" class="dashboard">
+            <div class="glass-panel navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-graduation-cap"></i> SchoolPortal Admin
+                </div>
+                <div class="nav-profile">
+                    <span>Admin User</span>
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" alt="Profile">
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="glass-panel sidebar">
+                    <div class="nav-item active"><i class="fas fa-home"></i> Overview</div>
+                    <div class="nav-item"><i class="fas fa-users"></i> Users</div>
+                    <div class="nav-item"><i class="fas fa-book"></i> Courses</div>
+                    <div class="nav-item"><i class="fas fa-cog"></i> Settings</div>
+                </div>
+
+                <div class="main-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                            <div class="stat-info">
+                                <h3>1,245</h3>
+                                <p>Total Students</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fce7f3; color:#db2777;"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <div class="stat-info">
+                                <h3>84</h3>
+                                <p>Total Teachers</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#dcfce7; color:#16a34a;"><i class="fas fa-book-open"></i></div>
+                            <div class="stat-info">
+                                <h3>320</h3>
+                                <p>Active Courses</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Recent activity</h2>
+                            <button class="logout-btn" style="color:var(--primary); border-color:#c7d2fe; background:#e0e7ff;">View All</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Action</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Alice Johnson</td>
+                                        <td>Registered as Student</td>
+                                        <td>Today, 10:45 AM</td>
+                                        <td><span class="badge success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mr. Smith</td>
+                                        <td>Updated Syllabus for CS101</td>
+                                        <td>Today, 09:12 AM</td>
+                                        <td><span class="badge info">Logged</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>System Admin</td>
+                                        <td>Database Backup</td>
+                                        <td>Yesterday, 11:00 PM</td>
+                                        <td><span class="badge success">Success</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Dashboard -->
+        <div id="teacher-dashboard" class="dashboard">
+            <div class="glass-panel navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-graduation-cap"></i> SchoolPortal Teacher
+                </div>
+                <div class="nav-profile">
+                    <span>Prof. Alan Turing</span>
+                    <img src="https://ui-avatars.com/api/?name=Alan+Turing&background=ec4899&color=fff" alt="Profile">
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="glass-panel sidebar">
+                    <div class="nav-item active"><i class="fas fa-chalkboard"></i> My Classes</div>
+                    <div class="nav-item"><i class="fas fa-tasks"></i> Assignments</div>
+                    <div class="nav-item"><i class="fas fa-star"></i> Grading</div>
+                    <div class="nav-item"><i class="fas fa-envelope"></i> Messages</div>
+                </div>
+
+                <div class="main-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fef3c7; color:#d97706;"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <h3>142</h3>
+                                <p>Students Enrolled</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#e0e7ff; color:#4f46e5;"><i class="fas fa-file-alt"></i></div>
+                            <div class="stat-info">
+                                <h3>12</h3>
+                                <p>Pending Grades</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>My Upcoming Classes</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Course</th>
+                                        <th>Time</th>
+                                        <th>Room</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Introduction to Computer Science (CS101)</td>
+                                        <td>09:00 AM - 10:30 AM</td>
+                                        <td>Room 402</td>
+                                        <td><span class="badge info">Upcoming</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Structures and Algorithms (CS201)</td>
+                                        <td>11:00 AM - 12:30 PM</td>
+                                        <td>Lab 1</td>
+                                        <td><span class="badge warning">Starts Soon</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Dashboard -->
+        <div id="student-dashboard" class="dashboard">
+            <div class="glass-panel navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-graduation-cap"></i> SchoolPortal
+                </div>
+                <div class="nav-profile">
+                    <span>Jane Doe</span>
+                    <img src="https://ui-avatars.com/api/?name=Jane+Doe&background=10b981&color=fff" alt="Profile">
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="glass-panel sidebar">
+                    <div class="nav-item active"><i class="fas fa-th-large"></i> Dashboard</div>
+                    <div class="nav-item"><i class="fas fa-book"></i> My Courses</div>
+                    <div class="nav-item"><i class="fas fa-calendar-alt"></i> Schedule</div>
+                    <div class="nav-item"><i class="fas fa-chart-line"></i> Grades</div>
+                </div>
+
+                <div class="main-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#dcfce7; color:#16a34a;"><i class="fas fa-gpa">A-</i></div>
+                            <div class="stat-info">
+                                <h3>3.8</h3>
+                                <p>Current GPA</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fee2e2; color:#ef4444;"><i class="fas fa-clock"></i></div>
+                            <div class="stat-info">
+                                <h3>2</h3>
+                                <p>Assignments Due</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Current Courses</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Course Name</th>
+                                        <th>Instructor</th>
+                                        <th>Progress</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Calculus I (MTH101)</td>
+                                        <td>Dr. Newton</td>
+                                        <td>
+                                            <div style="width: 100%; background: #e5e7eb; border-radius: 99px; height: 8px;">
+                                                <div style="width: 85%; background: var(--primary); height: 100%; border-radius: 99px;"></div>
+                                            </div>
+                                        </td>
+                                        <td><strong style="color:var(--primary)">A</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Computer Science (CS101)</td>
+                                        <td>Prof. Alan Turing</td>
+                                        <td>
+                                            <div style="width: 100%; background: #e5e7eb; border-radius: 99px; height: 8px;">
+                                                <div style="width: 92%; background: var(--secondary); height: 100%; border-radius: 99px;"></div>
+                                            </div>
+                                        </td>
+                                        <td><strong style="color:var(--secondary)">A+</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Physics I (PHY101)</td>
+                                        <td>Dr. Einstein</td>
+                                        <td>
+                                            <div style="width: 100%; background: #e5e7eb; border-radius: 99px; height: 8px;">
+                                                <div style="width: 78%; background: #f59e0b; height: 100%; border-radius: 99px;"></div>
+                                            </div>
+                                        </td>
+                                        <td><strong style="color:#f59e0b">B+</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showDashboard(role) {
+            // Hide role selection
+            document.getElementById('role-selection').style.display = 'none';
+            
+            // Hide all dashboards
+            document.querySelectorAll('.dashboard').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show selected dashboard
+            document.getElementById(role + '-dashboard').style.display = 'block';
+        }
+
+        function logout() {
+            // Hide all dashboards
+            document.querySelectorAll('.dashboard').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show role selection
+            document.getElementById('role-selection').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
