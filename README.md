@@ -1,4 +1,4 @@
-ko# Westprime Horizon School Portal
+# Westprime Horizon School Portal
 
 Westprime Horizon School Portal is a comprehensive, web-based management system designed to streamline academic operations for administrators, teachers, and students.
 
