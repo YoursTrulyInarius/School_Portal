@@ -74,7 +74,7 @@ cd School_Portal
 2. Open your browser and navigate to `http://localhost/School_Portal/`.
 
 ### 6. On Going
-1. Re-designing the "Enrollment form".
+
 
 
 ---
