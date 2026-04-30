@@ -84,5 +84,4 @@ cd School_Portal
 | Role | Username | Password |
 | :--- | :--- | :--- |
 | **Admin** | `admin` | `admin123` |
-a
 
