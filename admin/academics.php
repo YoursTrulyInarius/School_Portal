@@ -202,7 +202,8 @@ $result_sections = $conn->query($sql_sections);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Academics Management - Westprime Horizon</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">`n    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -240,29 +241,16 @@ $result_sections = $conn->query($sql_sections);
             background: #f9f9f9;
         }
 
-        .btn {
-            padding: 10px 20px;
-            border-radius: 6px;
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
             text-decoration: none;
             font-weight: 600;
             display: inline-block;
             cursor: pointer;
             border: none;
-        }
-
-        .btn-primary {
-            background: #4169E1;
-            color: white;
-        }
-
-        .btn-success {
-            background: #2ecc71;
-            color: white;
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
         }
 
         .form-grid {
@@ -322,9 +310,8 @@ $result_sections = $conn->query($sql_sections);
                             <input type="text" name="course_name" id="addCourseName" class="form-control"
                                 placeholder="Bachelor of Science in..." required>
                         </div>
-                        <div style="display: flex; align-items: flex-end;">
-                            <button type="submit" name="save_course" class="btn btn-primary" style="height: 42px;">Add
-                                Course</button>
+                        <div class="form-group" style="display: flex; align-items: flex-end;">
+                            <button type="submit" name="save_course" class="btn">Add Course</button>
                         </div>
                     </div>
                 </form>
@@ -352,9 +339,8 @@ $result_sections = $conn->query($sql_sections);
                             <input type="text" name="strand_name" id="addStrandName" class="form-control"
                                 placeholder="Science, Technology..." required>
                         </div>
-                        <div style="display: flex; align-items: flex-end;">
-                            <button type="submit" name="save_strand" class="btn btn-success" style="height: 42px;">Add
-                                Strand</button>
+                        <div class="form-group" style="display: flex; align-items: flex-end;">
+                            <button type="submit" name="save_strand" class="btn">Add Strand</button>
                         </div>
                     </div>
                 </form>
@@ -661,6 +647,7 @@ $result_sections = $conn->query($sql_sections);
         document.getElementById('blockSelect').addEventListener('change', updatePreview);
     </script>
 
-<script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>`n</body>
+<script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+</body>
 
 </html>
