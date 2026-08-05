@@ -85,3 +85,36 @@ cd School_Portal
 | :--- | :--- | :--- |
 | **Admin** | `admin` | `admin123` |
 
+---
+
+## 📁 Reorganization & Re-factoring (Recent Changes)
+
+The codebase has been refactored to optimize performance, clean up redundant/unused files, and establish a DRY (Don't Repeat Yourself) file structure:
+
+* **Consolidated Vendor Libraries**: Extraneous vendor configurations and multiple duplicate copies of PHPMailer have been removed. The application now uses a single, unified dependency folder at `/vendor/`.
+* **Centralized Sidebar Assets**: Duplicated inline styles (~200 lines) and scripts (~55 lines) from the admin, teacher, and student sidebars were extracted into shared assets:
+  * [`assets/css/sidebar.css`](file:///c:/xampp/htdocs/School_Portal/assets/css/sidebar.css)
+  * [`assets/js/sidebar.js`](file:///c:/xampp/htdocs/School_Portal/assets/js/sidebar.js)
+* **Centralized Auth Assets**: Shared styles for credentials screens (Login, Registration, OTP verification, Reset Password, Enrollment) were extracted into:
+  * [`assets/css/auth.css`](file:///c:/xampp/htdocs/School_Portal/assets/css/auth.css)
+* **Cleanup & Archiving**: Removed debug output text files and archived over 28 developer-only seeding, debug, and manual migration files in the [`_archive/`](file:///c:/xampp/htdocs/School_Portal/_archive) directory to clean the root environment.
+
+---
+
+## 📜 Version History & Roadmap
+
+### `v1.1.0` - Current Release (Codebase Reorganization)
+* Archived 28 debug/migration/seed files from project root to `_archive/`.
+* Consolidated vendor/PHPMailer modules, deleting redundant file trees.
+* Consolidated duplicate assets into shared stylesheets and scripts: `sidebar.css`, `sidebar.js`, and `auth.css`.
+* Cleaned inline styles from authentication pages (`login.php`, `register.php`, etc.).
+
+### 🔮 Future Roadmap (Upcoming Development)
+We plan to introduce further structural enhancements and new components in subsequent versions:
+* **Deep Refactoring**: Streamline backend routing, introduce unified middleware checks, and refine MVC architectures.
+* **Precise & Robust Validation**: Add robust input validators and secure CSRF middleware to all user inputs.
+* **Scholarship Portal Re-design**: Introduce a revamped, responsive Scholarship Management screen.
+* **Component Extensions**: Extend functionalities for Attendance, Voting, and grade calculation engines.
+
+
+
