@@ -49,6 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/auth.css?v=<?php echo time(); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sweetalert.js"></script>
     <style>
         .reset-box { margin: auto; max-width: 420px; }
     </style>
@@ -64,12 +66,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Reset Password</h2>
         
         <?php if ($success): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            <script>
+                window.SWEETALERT_FLASH = {
+                    type: 'success',
+                    title: 'Password Reset',
+                    html: 'Password reset successfully! You can now <a href="login.php" style="font-weight:bold;color:#4169E1;">login</a>.',
+                    showConfirmButton: true,
+                    allowOutsideClick: false
+                };
+            </script>
+            <p class="subtitle">Password updated successfully. Use the link above to login.</p>
         <?php else: ?>
             <p class="subtitle">Enter your new password below.</p>
             
             <?php if ($error): ?>
-                <div class="alert alert-error"><?php echo $error; ?></div>
+                <script>
+                    window.SWEETALERT_FLASH = {
+                        type: 'error',
+                        title: 'Reset Failed',
+                        text: <?php echo json_encode($error); ?>
+                    };
+                </script>
             <?php endif; ?>
 
             <form method="POST">

@@ -80,6 +80,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/auth.css?v=<?php echo time(); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sweetalert.js"></script>
 </head>
 <body>
 
@@ -100,7 +102,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h2 style="text-align: center; color: var(--royal-blue); margin-bottom: 35px;">Registration</h2>
             
             <?php if ($error): ?>
-                <div class="alert alert-danger" style="margin-bottom: 25px;"><?php echo $error; ?></div>
+                <script>
+                    window.SWEETALERT_FLASH = {
+                        type: 'error',
+                        title: 'Registration Error',
+                        text: <?php echo json_encode($error); ?>
+                    };
+                </script>
             <?php endif; ?>
 
             <form method="POST" action="">

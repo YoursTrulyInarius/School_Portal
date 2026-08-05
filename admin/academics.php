@@ -205,6 +205,7 @@ $result_sections = $conn->query($sql_sections);
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -282,17 +283,29 @@ $result_sections = $conn->query($sql_sections);
             <h2 style="color: var(--primary-color); margin-bottom: 25px;">📚 Academics Management</h2>
 
             <?php if ($success): ?>
-                <div class="alert success"
-                    style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                    <?php echo $success; ?>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: '<?php echo htmlspecialchars($success); ?>',
+                            icon: 'success',
+                            confirmButtonColor: '#4169E1'
+                        });
+                    });
+                </script>
             <?php endif; ?>
 
             <?php if ($error): ?>
-                <div class="alert error"
-                    style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                    <?php echo $error; ?>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: '<?php echo htmlspecialchars($error); ?>',
+                            icon: 'error',
+                            confirmButtonColor: '#4169E1'
+                        });
+                    });
+                </script>
             <?php endif; ?>
 
             <!-- ADD COURSE FORM -->
@@ -365,9 +378,8 @@ $result_sections = $conn->query($sql_sections);
                                     <tr>
                                         <td><strong><?php echo $c['course_code']; ?></strong></td>
                                         <td><?php echo $c['course_name']; ?></td>
-                                        <td><a href="?delete_course=<?php echo $c['id']; ?>" class="btn btn-danger"
-                                                style="padding: 4px 8px; font-size: 0.75rem;"
-                                                onclick="return confirm('Delete?');">Delete</a></td>
+                                        <td><a href="?delete_course=<?php echo $c['id']; ?>" class="btn btn-danger delete-btn"
+                                                style="padding: 4px 8px; font-size: 0.75rem;">Delete</a></td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
@@ -406,9 +418,8 @@ $result_sections = $conn->query($sql_sections);
                                                     style="background: #27ae60; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">Academic</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td><a href="?delete_strand=<?php echo $s['id']; ?>" class="btn btn-danger"
-                                                style="padding: 4px 8px; font-size: 0.75rem;"
-                                                onclick="return confirm('Delete?');">Delete</a></td>
+                                        <td><a href="?delete_strand=<?php echo $s['id']; ?>" class="btn btn-danger delete-btn"
+                                                style="padding: 4px 8px; font-size: 0.75rem;">Delete</a></td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
@@ -505,9 +516,8 @@ $result_sections = $conn->query($sql_sections);
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="?delete_section=<?php echo $section['id']; ?>" class="btn btn-danger"
-                                            style="padding: 5px 10px; font-size: 0.85rem;"
-                                            onclick="return confirm('Delete this section?');">Delete</a>
+                                         <a href="?delete_section=<?php echo $section['id']; ?>" class="btn btn-danger delete-btn"
+                                             style="padding: 5px 10px; font-size: 0.85rem;">Delete</a>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -645,6 +655,27 @@ $result_sections = $conn->query($sql_sections);
         document.getElementById('itemSelect').addEventListener('change', updatePreview);
         document.getElementById('yearSelect').addEventListener('change', updatePreview);
         document.getElementById('blockSelect').addEventListener('change', updatePreview);
+
+        // SweetAlert Deletion Confirmations
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = this.getAttribute('href');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action cannot be undone!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74c3c',
+                    cancelButtonColor: '#95a5a6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
     </script>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>

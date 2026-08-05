@@ -320,11 +320,12 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
                                     <td><?php echo $sched['room'] ? "<span class='badge badge-room'>".$sched['room']."</span>" : '-'; ?></td>
                                     <td><?php echo htmlspecialchars($sched['lastname'] . ', ' . $sched['firstname']); ?></td>
                                     <td>
-                                        <form method="POST" onsubmit="return confirm('Remove this schedule entry?');" style="margin:0;">
+                                        <form method="POST" id="deleteForm_<?php echo $sched['id']; ?>" style="margin:0;">
                                             <?php if($course_id): ?><input type="hidden" name="course_id" value="<?php echo $course_id; ?>"><?php endif; ?>
                                             <?php if($strand_id): ?><input type="hidden" name="strand_id" value="<?php echo $strand_id; ?>"><?php endif; ?>
                                             <input type="hidden" name="schedule_id" value="<?php echo $sched['id']; ?>">
-                                            <button type="submit" name="delete_schedule" class="delete-btn" title="Delete">&times;</button>
+                                            <input type="hidden" name="delete_schedule" value="1">
+                                            <button type="button" class="delete-btn" title="Delete" onclick="confirmDeleteSchedule('<?php echo $sched['id']; ?>', '<?php echo htmlspecialchars(addslashes($sched['subject'])); ?>')">&times;</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -354,6 +355,33 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
         const newUrl = window.location.href.split('&success')[0];
         window.history.replaceState({}, document.title, newUrl);
     <?php endif; ?>
+
+    // SweetAlert for Error
+    <?php if ($error): ?>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: <?php echo json_encode($error); ?>
+    });
+    <?php endif; ?>
+
+    // SweetAlert: Delete schedule confirmation
+    function confirmDeleteSchedule(scheduleId, subject) {
+        Swal.fire({
+            title: 'Remove Schedule?',
+            html: 'Are you sure you want to remove <strong>' + subject + '</strong> from the schedule?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74c3c',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, remove',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteForm_' + scheduleId).submit();
+            }
+        });
+    }
 </script>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>

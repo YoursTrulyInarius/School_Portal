@@ -96,6 +96,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }
         .payment-table td { vertical-align: middle; }
@@ -160,17 +161,7 @@ $result = $conn->query($sql);
             <h2 style="margin: 0; color: var(--primary-color);">Student Payments & Balance</h2>
         </div>
 
-        <?php if ($success): ?>
-            <div class="alert success" style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <?php echo $success; ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if ($error): ?>
-            <div class="alert error" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
+        <!-- SweetAlert handles success/error popups via JS below -->
 
         <div class="card" style="padding: 0; overflow: hidden;">
             <table class="payment-table" style="width: 100%; border-collapse: collapse;">
@@ -248,5 +239,23 @@ $result = $conn->query($sql);
 </div>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+<script>
+<?php if ($success): ?>
+Swal.fire({
+    icon: 'success',
+    title: 'Payment Recorded!',
+    text: <?php echo json_encode($success); ?>,
+    timer: 2500,
+    showConfirmButton: false
+});
+<?php endif; ?>
+<?php if ($error): ?>
+Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: <?php echo json_encode($error); ?>
+});
+<?php endif; ?>
+</script>
 </body>
 </html>

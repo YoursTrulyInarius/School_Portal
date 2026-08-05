@@ -149,6 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }</style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -162,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         
         <?php if ($error): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
+            <!-- SweetAlert handles error popup via JS below -->
         <?php endif; ?>
 
         <div class="card" style="max-width: 800px; margin: 0 auto;">
@@ -283,5 +284,14 @@ toggleFields();
 </script>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+<script>
+<?php if ($error): ?>
+Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: <?php echo json_encode($error); ?>
+});
+<?php endif; ?>
+</script>
 </body>
 </html>

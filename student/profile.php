@@ -99,6 +99,8 @@ $student = $conn->query("SELECT s.*, u.username, u.email, sec.grade_level, sec.s
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sweetalert.js"></script>
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }
         .profile-container {
@@ -137,10 +139,22 @@ $student = $conn->query("SELECT s.*, u.username, u.email, sec.grade_level, sec.s
         <h2 style="margin-bottom: 30px; color: var(--primary-color);">My Profile</h2>
 
         <?php if ($success): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            <script>
+                window.SWEETALERT_FLASH = {
+                    type: 'success',
+                    title: 'Update Successful',
+                    text: <?php echo json_encode($success); ?>
+                };
+            </script>
         <?php endif; ?>
         <?php if ($error): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
+            <script>
+                window.SWEETALERT_FLASH = {
+                    type: 'error',
+                    title: 'Update Failed',
+                    text: <?php echo json_encode($error); ?>
+                };
+            </script>
         <?php endif; ?>
 
         <div class="profile-container">

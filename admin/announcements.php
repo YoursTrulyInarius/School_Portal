@@ -19,6 +19,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }</style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -48,7 +49,7 @@ $result = $conn->query($sql);
                     <div style="margin: 15px 0; white-space: pre-wrap; color: #555; line-height: 1.6;"><?php echo htmlspecialchars($row['content']); ?></div>
                     <div style="text-align: right; margin-top: 15px;">
                         <a href="announcement_form.php?id=<?php echo $row['id']; ?>" class="btn" style="background: transparent; color: #17a2b8; border: 1px solid #17a2b8; font-size: 0.85rem; margin-right: 5px;">Edit</a>
-                        <a href="announcement_delete.php?id=<?php echo $row['id']; ?>" class="btn" style="background: transparent; color: #dc3545; border: 1px solid #dc3545; font-size: 0.85rem;" onclick="return confirm('Delete?');">Delete</a>
+                        <a href="javascript:void(0)" class="btn" style="background: transparent; color: #dc3545; border: 1px solid #dc3545; font-size: 0.85rem;" onclick="confirmDeleteAnnouncement('<?php echo $row['id']; ?>', '<?php echo htmlspecialchars(addslashes($row['title'])); ?>')">Delete</a>
                     </div>
                 </div>
             <?php endwhile; ?>
@@ -62,5 +63,23 @@ $result = $conn->query($sql);
 </div>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+<script>
+function confirmDeleteAnnouncement(id, title) {
+    Swal.fire({
+        title: 'Delete Announcement?',
+        html: 'Are you sure you want to delete <strong>' + title + '</strong>?<br><small style="color:#999;">This action cannot be undone.</small>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'announcement_delete.php?id=' + id;
+        }
+    });
+}
+</script>
 </body>
 </html>

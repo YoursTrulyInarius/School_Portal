@@ -217,6 +217,7 @@ function getGradeColor($grade) {
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -226,17 +227,7 @@ function getGradeColor($grade) {
     <div class="main-content">
         <h2 style="margin-bottom: 30px; color: var(--primary-color);">Manage Grades</h2>
 
-        <?php if ($success): ?>
-            <div class="alert success" style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <?php echo $success; ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if ($error): ?>
-            <div class="alert error" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
+        <!-- SweetAlert handles success/error popups via JS below -->
 
 
         <!-- Class/Subject Selector -->
@@ -407,5 +398,23 @@ document.getElementById('gradeModal').addEventListener('click', function(e) {
 </script>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+<script>
+<?php if ($success): ?>
+Swal.fire({
+    icon: 'success',
+    title: 'Grades Saved!',
+    text: <?php echo json_encode($success); ?>,
+    timer: 2500,
+    showConfirmButton: false
+});
+<?php endif; ?>
+<?php if ($error): ?>
+Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: <?php echo json_encode($error); ?>
+});
+<?php endif; ?>
+</script>
 </body>
 </html>

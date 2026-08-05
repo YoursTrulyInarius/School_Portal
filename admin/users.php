@@ -56,6 +56,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: #f0f4f8; margin: 0; }
         
@@ -212,28 +213,7 @@ $result = $conn->query($sql);
             <a href="user_form.php" class="btn">Add New User</a>
         </div>
 
-        <?php if ($success): ?>
-            <div class="alert success" style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <?php echo $success; ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if ($error): ?>
-            <div class="alert error" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if ($student_password): ?>
-            <div style="background: #e3f2fd; border: 2px solid #2196f3; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                <h3 style="color: #1976d2; margin: 0 0 10px 0;">🔑 New Password Generated</h3>
-                <p style="margin: 5px 0; font-size: 1.2rem;">
-                    <strong>Password:</strong> 
-                    <code style="background: white; padding: 8px 15px; border-radius: 4px; color: #1976d2; font-weight: 700; font-size: 1.3rem;"><?php echo htmlspecialchars($student_password); ?></code>
-                </p>
-                <p style="margin: 10px 0 0 0; color: #555; font-size: 0.9rem;">Share this password with the student.</p>
-            </div>
-        <?php endif; ?>
+        <!-- SweetAlert handles success/error/password popups via JS below -->
 
         <div style="margin-bottom: 25px;">
             <span style="font-weight: 600; margin-right: 10px; color: #555;">Filter by Role:</span>
@@ -328,7 +308,7 @@ $result = $conn->query($sql);
 
                                         <?php endif; ?>
                                         
-                                        <a href="user_delete.php?id=<?php echo $row['id']; ?>" class="action-btn" style="background: #e74c3c;" title="Delete" onclick="return confirm('Are you sure you want to delete this user?');">
+                                        <a href="javascript:void(0)" class="action-btn" style="background: #e74c3c;" title="Delete" onclick="confirmDeleteUser('<?php echo $row['id']; ?>', '<?php echo htmlspecialchars(addslashes($row['username'])); ?>')">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </div>
@@ -348,5 +328,56 @@ $result = $conn->query($sql);
 </div>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+<script>
+// SweetAlert: Show success message
+<?php if ($success): ?>
+Swal.fire({
+    icon: 'success',
+    title: 'Success!',
+    text: <?php echo json_encode($success); ?>,
+    timer: 2500,
+    showConfirmButton: false
+});
+<?php endif; ?>
+
+// SweetAlert: Show error message
+<?php if ($error): ?>
+Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: <?php echo json_encode($error); ?>
+});
+<?php endif; ?>
+
+// SweetAlert: Show new password
+<?php if ($student_password): ?>
+Swal.fire({
+    icon: 'info',
+    title: '🔑 New Password Generated',
+    html: '<p style="font-size:1.1rem;">New password:</p>' +
+          '<code style="background:#e3f2fd; padding:10px 20px; border-radius:6px; color:#1976d2; font-weight:700; font-size:1.4rem; display:inline-block; margin:10px 0; letter-spacing:1px;"><?php echo htmlspecialchars($student_password); ?></code>' +
+          '<p style="color:#666; font-size:0.9rem; margin-top:12px;">Share this password with the student.</p>',
+    confirmButtonColor: '#4169E1'
+});
+<?php endif; ?>
+
+// SweetAlert: Delete user confirmation
+function confirmDeleteUser(userId, username) {
+    Swal.fire({
+        title: 'Delete User?',
+        html: 'Are you sure you want to delete <strong>' + username + '</strong>?<br><small style="color:#999;">This action cannot be undone.</small>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'user_delete.php?id=' + userId;
+        }
+    });
+}
+</script>
 </body>
 </html>

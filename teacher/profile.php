@@ -148,6 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-size: 1.1rem;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -157,12 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="main-content">
         <h2 style="margin-bottom: 30px; color: var(--primary-color);">My Profile</h2>
 
-        <?php if ($msg): ?>
-            <div class="alert alert-success"><?php echo $msg; ?></div>
-        <?php endif; ?>
-        <?php if ($error): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
-        <?php endif; ?>
+        <!-- SweetAlert handles success/error popups via JS below -->
 
         <div class="profile-container">
             <!-- Personal Info Card -->
@@ -260,5 +256,23 @@ function submitImageUpload(input) {
 </script>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+<script>
+<?php if ($msg): ?>
+Swal.fire({
+    icon: 'success',
+    title: 'Profile Updated!',
+    text: <?php echo json_encode($msg); ?>,
+    timer: 2500,
+    showConfirmButton: false
+});
+<?php endif; ?>
+<?php if ($error): ?>
+Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: <?php echo json_encode($error); ?>
+});
+<?php endif; ?>
+</script>
 </body>
 </html>

@@ -61,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }</style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -73,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="announcements.php" class="btn" style="background: #6c757d; font-size: 0.9rem;">&larr; Back to Announcements</a>
         </div>
         
-        <?php if ($error): ?> <div class="alert alert-danger"><?php echo $error; ?></div> <?php endif; ?>
+        <!-- SweetAlert handles error popup via JS below -->
         
         <div class="card" style="max-width: 700px; margin: 0 auto;">
             <form method="POST" action="">
@@ -106,5 +107,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+<script>
+<?php if ($error): ?>
+Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: <?php echo json_encode($error); ?>
+});
+<?php endif; ?>
+</script>
 </body>
 </html>

@@ -126,6 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/auth.css?v=<?php echo time(); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sweetalert.js"></script>
 </head>
 <body>
 
@@ -139,11 +141,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p class="subtitle">Enter your registered email and we'll send you a new password.</p>
         
         <?php if ($success): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            <script>
+                window.SWEETALERT_FLASH = {
+                    type: 'success',
+                    title: 'Email Sent',
+                    text: 'A verification code was sent to your email address.'
+                };
+            </script>
         <?php endif; ?>
         
         <?php if ($error): ?>
-            <div class="alert alert-error"><?php echo $error; ?></div>
+            <script>
+                window.SWEETALERT_FLASH = {
+                    type: 'error',
+                    title: 'Request Failed',
+                    text: <?php echo json_encode($error); ?>
+                };
+            </script>
         <?php endif; ?>
 
         <form method="POST">

@@ -23,6 +23,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }</style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -62,7 +63,7 @@ $result = $conn->query($sql);
                                 </td>
                                 <td style="padding: 15px;">
                                     <a href="section_form.php?id=<?php echo $row['id']; ?>" style="color: var(--primary-color); margin-right: 15px; text-decoration: none; font-weight: 500;">Edit</a>
-                                    <a href="section_delete.php?id=<?php echo $row['id']; ?>" style="color: #e74c3c; text-decoration: none; font-weight: 500;" onclick="return confirm('Delete this section?');">Delete</a>
+                                    <a href="javascript:void(0)" style="color: #e74c3c; text-decoration: none; font-weight: 500;" onclick="confirmDeleteSection('<?php echo $row['id']; ?>', '<?php echo htmlspecialchars(addslashes($row['section_name'])); ?>')">Delete</a>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
@@ -78,5 +79,23 @@ $result = $conn->query($sql);
 </div>
 
 <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+<script>
+function confirmDeleteSection(id, name) {
+    Swal.fire({
+        title: 'Delete Section?',
+        html: 'Are you sure you want to delete section <strong>' + name + '</strong>?<br><small style="color:#999;">This action cannot be undone.</small>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'section_delete.php?id=' + id;
+        }
+    });
+}
+</script>
 </body>
 </html>

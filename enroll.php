@@ -65,12 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Enrollment - Westprime Horizon</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/auth.css?v=<?php echo time(); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sweetalert.js"></script>
     <style>
         .enrollment-container { margin: auto; width: 100%; max-width: 700px; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -91,24 +89,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php if ($success): ?>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    title: 'Enrollment Submitted!',
-                    text: '<?php echo $success; ?>',
-                    icon: 'success',
-                    confirmButtonText: 'Okay',
-                    confirmButtonColor: '#3498db'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'index.php';
-                    }
-                });
-            });
+            window.SWEETALERT_FLASH = {
+                type: 'success',
+                title: 'Enrollment Submitted!',
+                text: <?php echo json_encode($success); ?>,
+                redirect: 'index.php',
+                redirectOnConfirm: true
+            };
         </script>
     <?php endif; ?>
     
     <?php if ($error): ?>
-        <div class="alert alert-error"><?php echo $error; ?></div>
+        <script>
+            window.SWEETALERT_FLASH = {
+                type: 'error',
+                title: 'Enrollment Failed',
+                text: <?php echo json_encode($error); ?>
+            };
+        </script>
     <?php endif; ?>
 
     <form method="POST" action="">

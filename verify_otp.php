@@ -42,6 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/auth.css?v=<?php echo time(); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sweetalert.js"></script>
     <style>
         .auth-box { text-align: center; width: 100%; max-width: 400px; margin: auto; }
         .form-control { text-align: center; letter-spacing: 5px; font-size: 1.5rem; }
@@ -53,7 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p style="color: #666; margin-bottom: 30px;">Enter the 6-digit code sent to<br><strong><?php echo htmlspecialchars($email); ?></strong></p>
         
         <?php if ($error): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
+            <script>
+                window.SWEETALERT_FLASH = {
+                    type: 'error',
+                    title: 'Verification Failed',
+                    text: <?php echo json_encode($error); ?>
+                };
+            </script>
         <?php endif; ?>
 
         <form method="POST">
