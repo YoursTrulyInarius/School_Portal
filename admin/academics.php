@@ -202,7 +202,7 @@ $result_sections = $conn->query($sql_sections);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Academics Management - Westprime Horizon</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">`n    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -661,6 +661,6 @@ $result_sections = $conn->query($sql_sections);
         document.getElementById('blockSelect').addEventListener('change', updatePreview);
     </script>
 
-</body>
+<script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>`n</body>
 
 </html>

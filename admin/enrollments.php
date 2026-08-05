@@ -130,18 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Send email with credentials
                     // Send email with credentials
                     // Check for PHPMailer in admin/vendor or root vendor
-                    if (file_exists('vendor/PHPMailer/src/Exception.php')) {
-                        require 'vendor/PHPMailer/src/Exception.php';
-                        require 'vendor/PHPMailer/src/PHPMailer.php';
-                        require 'vendor/PHPMailer/src/SMTP.php';
-                    } elseif (file_exists('../vendor/PHPMailer/src/Exception.php')) {
-                        require '../vendor/PHPMailer/src/Exception.php';
-                        require '../vendor/PHPMailer/src/PHPMailer.php';
-                        require '../vendor/PHPMailer/src/SMTP.php';
-                    } else {
-                        // Fallback/Error if not found
-                        error_log("PHPMailer not found in admin/vendor or root vendor.");
-                    }
+                    require_once '../vendor/PHPMailer/src/Exception.php';
+                    require_once '../vendor/PHPMailer/src/PHPMailer.php';
+                    require_once '../vendor/PHPMailer/src/SMTP.php';
 
                     $mail = new PHPMailer(true);
 
@@ -254,7 +245,7 @@ $requests = $conn->query($requests_sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enrollment Requests - Westprime Horizon</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">`n    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -497,6 +488,6 @@ $requests = $conn->query($requests_sql);
         </div>
     </div>
 
-</body>
+<script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>`n</body>
 
 </html>
