@@ -287,7 +287,7 @@ $result_sections = $conn->query($sql_sections);
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             title: 'Success!',
-                            text: '<?php echo htmlspecialchars($success); ?>',
+                            text: <?php echo json_encode($success, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
                             icon: 'success',
                             confirmButtonColor: '#4169E1'
                         });
@@ -300,7 +300,7 @@ $result_sections = $conn->query($sql_sections);
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             title: 'Error!',
-                            text: '<?php echo htmlspecialchars($error); ?>',
+                            text: <?php echo json_encode($error, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
                             icon: 'error',
                             confirmButtonColor: '#4169E1'
                         });
@@ -434,7 +434,7 @@ $result_sections = $conn->query($sql_sections);
 
             <!-- ADD SECTION FORM -->
             <div class="card">
-                <h3 style="margin: 0 0 20px 0;">➕ Add Section</h3>
+                <h3 style="margin: 0 0 20px 0;">➕ Add Section/Blocks</h3>
                 <form method="POST" id="sectionForm">
                     <div class="form-grid">
                         <div class="form-group">

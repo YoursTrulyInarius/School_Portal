@@ -35,10 +35,20 @@ Westprime Horizon School Portal is a comprehensive, web-based management system 
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: HTML5, Vanilla CSS3, JavaScript (ES6+)
-- **Backend**: PHP (7.4+)
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+), SweetAlert2 for notifications
+- **Backend**: PHP (7.4+), vanilla PHP pages and server-side routing
 - **Database**: MySQL / MariaDB
+- **Mail & Utilities**: PHPMailer via `vendor/`
 - **Server**: XAMPP / Apache
+- **Assets**: Shared JS/CSS under `assets/js/` and `assets/css/`
+
+---
+
+## 📦 Dependencies
+
+- **PHPMailer**: email sending library under `vendor/PHPMailer/`
+- **SweetAlert2**: used for user notifications across auth, admin, and profile flows
+- **fpdf**: PDF generation library found in `vendor/setasign/fpdf/` (if used by reports or exports)
 
 ---
 
