@@ -78,6 +78,17 @@ cd School_Portal
    define('DB_PASSWORD', '');
    define('DB_NAME', 'school_portal');
    ```
+3. Configure SMTP in the same `config.php` file if password reset and enrollment emails are needed:
+  ```php
+  define('SMTP_HOST', 'smtp.gmail.com');
+  define('SMTP_PORT', 587);
+  define('SMTP_USERNAME', 'your_email@gmail.com');
+  define('SMTP_PASSWORD', 'your_app_password');
+  define('SMTP_ENCRYPTION', 'tls');
+  define('SMTP_FROM_EMAIL', 'your_email@gmail.com');
+  define('SMTP_FROM_NAME', 'Westprime Horizon Institute');
+  ```
+  For Gmail, use an App Password rather than your regular account password. SMTP credentials are used by both the password reset and enrollment approval email flows.
 
 ### 5. Access the Portal
 1. Move the project folder to `C:\xampp\htdocs\`.
@@ -97,27 +108,39 @@ cd School_Portal
 
 ---
 
-## 📁 Reorganization & Re-factoring (Recent Changes)
+## 📁 Implemented Changes
 
-The codebase has been refactored to optimize performance, clean up redundant/unused files, and establish a DRY (Don't Repeat Yourself) file structure:
+### UI and shared assets
+- Standardized the primary application color to Royal Blue (`#4169E1`) across the global styles, authentication screens, sidebars, dashboards, schedules, payments, and administrative pages.
+- Centralized shared sidebar styles and behavior in `assets/css/sidebar.css` and `assets/js/sidebar.js`.
+- Centralized authentication styles in `assets/css/auth.css` for login, registration, enrollment, OTP verification, and password reset pages.
+- Consolidated the project dependencies under the single `vendor/` directory, including PHPMailer and FPDF.
 
-* **Consolidated Vendor Libraries**: Extraneous vendor configurations and multiple duplicate copies of PHPMailer have been removed. The application now uses a single, unified dependency folder at `/vendor/`.
-* **Centralized Sidebar Assets**: Duplicated inline styles (~200 lines) and scripts (~55 lines) from the admin, teacher, and student sidebars were extracted into shared assets:
-  * [`assets/css/sidebar.css`](file:///c:/xampp/htdocs/School_Portal/assets/css/sidebar.css)
-  * [`assets/js/sidebar.js`](file:///c:/xampp/htdocs/School_Portal/assets/js/sidebar.js)
-* **Centralized Auth Assets**: Shared styles for credentials screens (Login, Registration, OTP verification, Reset Password, Enrollment) were extracted into:
-  * [`assets/css/auth.css`](file:///c:/xampp/htdocs/School_Portal/assets/css/auth.css)
-* **Cleanup & Archiving**: Removed debug output text files and archived over 28 developer-only seeding, debug, and manual migration files in the [`_archive/`](file:///c:/xampp/htdocs/School_Portal/_archive) directory to clean the root environment.
+### Academic year and scheduling
+- Added automatic academic-year detection through `get_current_school_year()` in `config.php`.
+- Added automatic current-semester detection through `get_current_semester_label()`.
+- Updated schedule creation so administrators select either `1st Semester` or `2nd Semester` when assigning a teacher to a class.
+- Removed the quarter field from schedules. College uses two semesters, while senior high school follows the same two-semester schedule model, with quarters handled separately where needed for grading.
+- Updated teacher and student schedule printouts to display the current academic year and semester dynamically instead of using hardcoded values.
+
+### Database and email configuration
+- Rebuilt `database.sql` as the consolidated schema and setup script for users, teachers, students, courses, strands, sections, schedules, grades, attendance, announcements, enrollment requests, and payment transactions.
+- Added schedule `school_year` and `semester` fields to the canonical database schema.
+- Centralized all SMTP settings in `config.php` and `config.example.php`. The password reset and enrollment approval flows now use the shared `SMTP_*` configuration constants instead of hardcoded credentials.
+- Archived legacy migrations, seed scripts, debug utilities, and the duplicate database setup document under `_archive/`.
 
 ---
 
 ## 📜 Version History & Roadmap
 
-### `v1.1.0` - Current Release (Codebase Reorganization)
-* Archived 28 debug/migration/seed files from project root to `_archive/`.
-* Consolidated vendor/PHPMailer modules, deleting redundant file trees.
-* Consolidated duplicate assets into shared stylesheets and scripts: `sidebar.css`, `sidebar.js`, and `auth.css`.
-* Cleaned inline styles from authentication pages (`login.php`, `register.php`, etc.).
+### `v1.1.0` - Current Release (Portal Reorganization and Academic Updates)
+* Standardized the application color scheme using Royal Blue (`#4169E1`).
+* Centralized sidebar and authentication assets.
+* Consolidated the database schema in `database.sql`.
+* Added automatic academic-year and semester display logic.
+* Added semester selection to administrator schedule assignment and removed schedule quarters.
+* Centralized PHPMailer SMTP configuration in `config.php`.
+* Archived developer-only migrations, seeders, debug scripts, and duplicate setup documentation.
 
 ### 🔮 Future Roadmap (Upcoming Development)
 We plan to introduce further structural enhancements and new components in subsequent versions:
