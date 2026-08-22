@@ -1,5 +1,5 @@
 -- Database Creation
-CREATE DATABASE IF NOT EXISTS school_portal;
+CREATE DATABASE IF NOT EXISTS school_portal CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE school_portal;
 
 -- 1. Users Table (Core Authentication)
@@ -8,11 +8,11 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'teacher', 'student') NOT NULL,
-    email VARCHAR(100),
+    email VARCHAR(100) NULL,
     reset_token_hash VARCHAR(64) NULL,
     reset_token_expires_at DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 2. Teachers Table (Linked to Users)
 CREATE TABLE IF NOT EXISTS teachers (
@@ -21,19 +21,19 @@ CREATE TABLE IF NOT EXISTS teachers (
     employee_id VARCHAR(20) UNIQUE NOT NULL,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
-    address TEXT,
-    contact_number VARCHAR(20),
+    address TEXT NULL,
+    contact_number VARCHAR(20) NULL,
     profile_image VARCHAR(255) NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 3. Courses/Subjects Table (College)
 CREATE TABLE IF NOT EXISTS courses (
     id INT AUTO_INCREMENT PRIMARY KEY,
     course_name VARCHAR(100) NOT NULL,
     course_code VARCHAR(20) UNIQUE NOT NULL,
-    description TEXT
-);
+    description TEXT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 3.1 Strands Table (Senior High)
 CREATE TABLE IF NOT EXISTS strands (
@@ -41,22 +41,22 @@ CREATE TABLE IF NOT EXISTS strands (
     strand_name VARCHAR(100) NOT NULL,
     strand_code VARCHAR(20) UNIQUE NOT NULL,
     description VARCHAR(255) DEFAULT 'Senior High School Strand'
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 4. Sections Table (Academic Structure)
 CREATE TABLE IF NOT EXISTS sections (
     id INT AUTO_INCREMENT PRIMARY KEY,
     section_name VARCHAR(50) NOT NULL,
-    grade_level VARCHAR(20) NOT NULL, -- e.g., 'Grade 7', 'Grade 12', '1st Year', '2nd Year'
-    year_level VARCHAR(20) NULL, -- e.g., '1', '2', '3', '4', '11', '12'
-    block ENUM('A', 'B', 'C', 'D', 'E') NULL, -- Block assignment
-    course_id INT NULL, -- Link to College Course
-    strand_id INT NULL, -- Link to SHS Strand
-    adviser_id INT,
+    grade_level VARCHAR(20) NOT NULL,
+    year_level VARCHAR(20) NULL,
+    block ENUM('A', 'B', 'C', 'D', 'E') NULL,
+    course_id INT NULL,
+    strand_id INT NULL,
+    adviser_id INT NULL,
     FOREIGN KEY (adviser_id) REFERENCES teachers(id) ON DELETE SET NULL,
     FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE SET NULL,
     FOREIGN KEY (strand_id) REFERENCES strands(id) ON DELETE SET NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 5. Students Table (Linked to Users and Sections)
 CREATE TABLE IF NOT EXISTS students (
@@ -65,16 +65,16 @@ CREATE TABLE IF NOT EXISTS students (
     lrn VARCHAR(20) UNIQUE NOT NULL,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
-    address TEXT,
-    contact_number VARCHAR(20),
-    section_id INT,
+    address TEXT NULL,
+    contact_number VARCHAR(20) NULL,
+    section_id INT NULL,
     is_scholar BOOLEAN DEFAULT 0,
     enrollment_details VARCHAR(255) DEFAULT '',
     profile_image VARCHAR(255) NULL,
     total_fee DECIMAL(10,2) DEFAULT 0.00,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (section_id) REFERENCES sections(id) ON DELETE SET NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 6. Class Schedules (Linking Sections, Courses, and Teachers)
 CREATE TABLE IF NOT EXISTS schedules (
@@ -85,16 +85,15 @@ CREATE TABLE IF NOT EXISTS schedules (
     strand_id INT NULL,
     school_year VARCHAR(20) NOT NULL DEFAULT '2025-2026',
     semester ENUM('1st Semester', '2nd Semester') NOT NULL DEFAULT '1st Semester',
-    quarter ENUM('1st Quarter', '2nd Quarter', '3rd Quarter', '4th Quarter') NOT NULL DEFAULT '1st Quarter',
     subject VARCHAR(100) NOT NULL,
-    day VARCHAR(20) NOT NULL, -- e.g., 'Monday', 'MWF'
-    time VARCHAR(50) NOT NULL, -- e.g., '9:00 AM - 10:30 AM'
+    day VARCHAR(20) NOT NULL,
+    time VARCHAR(50) NOT NULL,
     room VARCHAR(50) NULL,
     FOREIGN KEY (section_id) REFERENCES sections(id) ON DELETE CASCADE,
     FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE CASCADE,
     FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
     FOREIGN KEY (strand_id) REFERENCES strands(id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 7. Grades Table
 CREATE TABLE IF NOT EXISTS grades (
@@ -108,7 +107,7 @@ CREATE TABLE IF NOT EXISTS grades (
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
     FOREIGN KEY (schedule_id) REFERENCES schedules(id) ON DELETE CASCADE,
     FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE SET NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 8. Attendance Table
 CREATE TABLE IF NOT EXISTS attendance (
@@ -119,18 +118,18 @@ CREATE TABLE IF NOT EXISTS attendance (
     status ENUM('present', 'absent', 'late') NOT NULL,
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
     FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 9. Announcements Table
 CREATE TABLE IF NOT EXISTS announcements (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL, -- The author (usually admin)
+    user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     target_audience ENUM('all', 'teacher', 'student') DEFAULT 'all',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 10. Enrollment Requests Table
 CREATE TABLE IF NOT EXISTS enrollment_requests (
@@ -139,45 +138,42 @@ CREATE TABLE IF NOT EXISTS enrollment_requests (
     lastname VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     contact_number VARCHAR(20) NOT NULL,
-    address TEXT,
+    address TEXT NULL,
     grade_level VARCHAR(100) NOT NULL,
     course_id INT NULL,
     strand_id INT NULL,
     year_level INT NULL,
     block VARCHAR(5) NULL,
-    previous_school VARCHAR(255),
+    previous_school VARCHAR(255) NULL,
     status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     processed_at TIMESTAMP NULL,
     processed_by INT NULL,
-    notes TEXT,
+    notes TEXT NULL,
     FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE SET NULL,
     FOREIGN KEY (strand_id) REFERENCES strands(id) ON DELETE SET NULL,
     FOREIGN KEY (processed_by) REFERENCES users(id) ON DELETE SET NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 11. Payment Transactions Table
 CREATE TABLE IF NOT EXISTS payment_transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
-    payment_type VARCHAR(50) NOT NULL, -- e.g., 'Tuition', 'Miscellaneous', 'Books'
-    payment_method VARCHAR(50) NOT NULL, -- e.g., 'Cash', 'Bank Transfer', 'Online'
+    payment_type VARCHAR(50) NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
     reference_number VARCHAR(100) NULL,
     status ENUM('pending', 'completed', 'failed') DEFAULT 'pending',
     payment_date DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by INT NULL,
-    notes TEXT,
+    notes TEXT NULL,
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 12. Seed Data
-
--- 12.1 Default Users
--- Admin: admin / admin123
-
-INSERT INTO users (username, password, role) VALUES 
+-- Default admin account: admin / admin123
+INSERT INTO users (username, password, role) VALUES
 ('admin', '$2y$10$IKfc069Ajf6kgzEV2v3XbOslfLJtcXfRywovSyD2.sEFdbWhfiIKa', 'admin')
-ON DUPLICATE KEY UPDATE username=username;
+ON DUPLICATE KEY UPDATE username = username;

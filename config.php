@@ -24,12 +24,4 @@ function get_current_semester_label() {
     $month = (int) date('n');
     return ($month >= 1 && $month <= 6) ? '2nd Semester' : '1st Semester';
 }
-
-function get_quarter_options_for_semester($semester) {
-    if ($semester === '2nd Semester') {
-        return ['3rd Quarter', '4th Quarter'];
-    }
-
-    return ['1st Quarter', '2nd Quarter'];
-}
 ?>
