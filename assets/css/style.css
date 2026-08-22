@@ -5,7 +5,7 @@
     --primary-color: #4169E1;
     --primary-dark: #4169E1;
     --primary-light: #4169E1;
-    --secondary-color: #17a2b8;
+    --secondary-color: #4169E1;
     --accent-color: #ffffff;
     --text-color: #333333;
     --text-muted: #666666;
@@ -62,14 +62,14 @@ a:hover {
     font-size: 1rem;
     font-weight: 600;
     transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.25);
+    box-shadow: 0 4px 12px rgba(65, 105, 225, 0.25);
     text-align: center;
 }
 
 .btn:hover {
     background: var(--primary-color);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 86, 179, 0.35);
+    box-shadow: 0 6px 16px rgba(65, 105, 225, 0.35);
     color: white;
 }
 
@@ -107,7 +107,7 @@ a:hover {
     border-color: var(--primary-color);
     background-color: #fff;
     outline: none;
-    box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.1);
+    box-shadow: 0 0 0 4px rgba(65, 105, 225, 0.1);
 }
 
 /* ===================== */
@@ -266,7 +266,7 @@ a:hover {
     height: 48px;
     font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.4);
+    box-shadow: 0 4px 15px rgba(65, 105, 225, 0.4);
     transition: var(--transition);
     align-items: center;
     justify-content: center;
@@ -375,7 +375,7 @@ a:hover {
     border-radius: var(--border-radius);
     margin-bottom: 25px;
     box-shadow: var(--box-shadow);
-    border: 1px solid rgba(0, 86, 179, 0.1);
+    border: 1px solid rgba(65, 105, 225, 0.1);
 }
 
 .welcome-header h2 {

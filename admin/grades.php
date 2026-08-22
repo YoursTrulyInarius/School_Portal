@@ -89,9 +89,9 @@ function getGradeColor($grade) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #004aad;
-            --primary-dark: #003380;
-            --secondary: #5ce1e6;
+            --primary: #4169E1;
+            --primary-dark: #4169E1;
+            --secondary: #4169E1;
             --bg-light: #f8fafc;
         }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); margin: 0; }

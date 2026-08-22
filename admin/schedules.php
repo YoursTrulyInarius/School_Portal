@@ -121,9 +121,9 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
-            --primary: #004aad;
-            --primary-dark: #003380;
-            --secondary: #5ce1e6;
+            --primary: #4169E1;
+            --primary-dark: #4169E1;
+            --secondary: #4169E1;
             --text-dark: #333;
             --bg-light: #f4f6f9;
         }

@@ -48,7 +48,7 @@ $result = $conn->query($sql);
                     </p>
                     <div style="margin: 15px 0; white-space: pre-wrap; color: #555; line-height: 1.6;"><?php echo htmlspecialchars($row['content']); ?></div>
                     <div style="text-align: right; margin-top: 15px;">
-                        <a href="announcement_form.php?id=<?php echo $row['id']; ?>" class="btn" style="background: transparent; color: #17a2b8; border: 1px solid #17a2b8; font-size: 0.85rem; margin-right: 5px;">Edit</a>
+                        <a href="announcement_form.php?id=<?php echo $row['id']; ?>" class="btn" style="background: transparent; color: #4169E1; border: 1px solid #4169E1; font-size: 0.85rem; margin-right: 5px;">Edit</a>
                         <a href="javascript:void(0)" class="btn" style="background: transparent; color: #dc3545; border: 1px solid #dc3545; font-size: 0.85rem;" onclick="confirmDeleteAnnouncement('<?php echo $row['id']; ?>', '<?php echo htmlspecialchars(addslashes($row['title'])); ?>')">Delete</a>
                     </div>
                 </div>

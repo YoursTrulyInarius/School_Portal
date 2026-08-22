@@ -63,7 +63,7 @@ $days_with_classes = count($unique_days);
             border-radius: 12px;
             margin-bottom: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(0, 86, 179, 0.1);
+            border: 1px solid rgba(65, 105, 225, 0.1);
         }
         .welcome-header h2 {
             margin: 0 0 6px 0;
@@ -89,7 +89,7 @@ $days_with_classes = count($unique_days);
             color: white;
             padding: 24px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
+            box-shadow: 0 4px 15px rgba(65, 105, 225, 0.3);
         }
         .stats-card.green {
             background: #28a745;

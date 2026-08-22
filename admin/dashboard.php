@@ -68,7 +68,7 @@ $total_courses = $conn->query("SELECT count(*) as count FROM courses")->fetch_as
             padding: 24px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid #17a2b8;
+            border-left: 5px solid #4169E1;
         }
         .stat-card.blue { border-left-color: #4169E1; }
         .stat-card.green { border-left-color: #28a745; }
@@ -192,7 +192,7 @@ $total_courses = $conn->query("SELECT count(*) as count FROM courses")->fetch_as
             <div class="stat-card">
                 <h3>Total Students</h3>
                 <p class="number"><?php echo $total_students; ?></p>
-                <a href="users.php?role=student" class="btn-link" style="color: #17a2b8; border-color: #17a2b8;">View Details →</a>
+                <a href="users.php?role=student" class="btn-link" style="color: #4169E1; border-color: #4169E1;">View Details →</a>
             </div>
             <div class="stat-card blue">
                 <h3>Total Teachers</h3>

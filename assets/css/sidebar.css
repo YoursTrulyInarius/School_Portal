@@ -15,7 +15,7 @@
     height: 52px;
     font-size: 28px;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0, 86, 179, 0.5);
+    box-shadow: 0 4px 20px rgba(65, 105, 225, 0.5);
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;

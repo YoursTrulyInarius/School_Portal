@@ -145,7 +145,7 @@ body {
 
 .form-control:focus {
     border-color: var(--royal-blue);
-    box-shadow: 0 0 0 4px rgba(0, 35, 102, 0.1);
+    box-shadow: 0 0 0 4px rgba(65, 105, 225, 0.1);
     transform: scale(1.01);
 }
 
@@ -156,7 +156,7 @@ body {
     border-radius: 12px !important;
     font-weight: 600;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(0, 35, 102, 0.2);
+    box-shadow: 0 4px 15px rgba(65, 105, 225, 0.2);
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
     overflow: hidden;
@@ -164,7 +164,7 @@ body {
 
 .btn-block:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 35, 102, 0.3);
+    box-shadow: 0 8px 25px rgba(65, 105, 225, 0.3);
     background: var(--royal-blue) !important;
 }
 
@@ -187,7 +187,7 @@ body {
 }
 
 .password-wrapper button:hover {
-    background: rgba(0, 35, 102, 0.05);
+    background: rgba(65, 105, 225, 0.05);
     color: var(--royal-blue);
     transform: translateY(-50%) scale(1.1);
 }

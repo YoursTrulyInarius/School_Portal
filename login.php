@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     New student? <a href="enroll.php" style="font-weight: 700; color: var(--royal-blue);">Enroll here</a>
                 </p>
                 <p style="color: #666;">
-                    No Account? <a href="register.php" style="font-weight: 700; color: #17a2b8;">Register here</a>
+                    No Account? <a href="register.php" style="font-weight: 700; color: #4169E1;">Register here</a>
                 </p>
             </div>
         </div>
