@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $subject = clean_input($_POST['subject']);
         $section_id = clean_input($_POST['section_id']);
         $teacher_id = clean_input($_POST['teacher_id']);
+        $school_year = isset($_POST['school_year']) ? clean_input($_POST['school_year']) : $current_school_year;
         $semester = isset($_POST['semester']) && !empty($_POST['semester']) ? clean_input($_POST['semester']) : '1st Semester';
         
         // Optional
@@ -31,12 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $p_course_id = isset($_POST['course_id']) && !empty($_POST['course_id']) ? clean_input($_POST['course_id']) : null;
         $p_strand_id = isset($_POST['strand_id']) && !empty($_POST['strand_id']) ? clean_input($_POST['strand_id']) : null;
 
-        if (empty($day) || empty($time) || empty($subject) || empty($section_id) || empty($teacher_id) || empty($semester)) {
-            $error = "Please fill in all required fields (Block, Subject, Time, Day, Teacher, Semester).";
+        if (empty($day) || empty($time) || empty($subject) || empty($section_id) || empty($teacher_id) || empty($school_year) || empty($semester)) {
+            $error = "Please fill in all required fields (School Year, Block, Subject, Time, Day, Teacher, Semester).";
+        } elseif (!preg_match('/^\d{4}-\d{4}$/', $school_year)) {
+            $error = "Please enter the school year in YYYY-YYYY format.";
         } else {
             // Insert with proper columns including strand_id and section_id
             $stmt = $conn->prepare("INSERT INTO schedules (course_id, strand_id, section_id, school_year, semester, day, time, room, subject, teacher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiissssssi", $p_course_id, $p_strand_id, $section_id, $current_school_year, $semester, $day, $time, $room, $subject, $teacher_id);
+            $stmt->bind_param("iiissssssi", $p_course_id, $p_strand_id, $section_id, $school_year, $semester, $day, $time, $room, $subject, $teacher_id);
             
             if ($stmt->execute()) {
                 $redirect_params = [];
@@ -242,7 +245,7 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
                     <div class="form-row">
                         <div class="form-group">
                             <label>School Year *</label>
-                            <input type="text" class="form-control" value="<?php echo htmlspecialchars($current_school_year); ?>" readonly>
+                            <input type="text" name="school_year" class="form-control" value="<?php echo htmlspecialchars($_POST['school_year'] ?? $current_school_year); ?>" placeholder="YYYY-YYYY" pattern="[0-9]{4}-[0-9]{4}" required>
                         </div>
                         <div class="form-group">
                             <label>Semester *</label>
