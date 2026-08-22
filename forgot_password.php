@@ -54,15 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 // Server settings
                 $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
+                $mail->Host       = SMTP_HOST;
                 $mail->SMTPAuth   = true;
-                $mail->Username   = 'limvic2019@gmail.com';
-                $mail->Password   = 'egkxivercawyaqqp';
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
+                $mail->Username   = SMTP_USERNAME;
+                $mail->Password   = SMTP_PASSWORD;
+                $mail->SMTPSecure = SMTP_ENCRYPTION === 'ssl' ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port       = SMTP_PORT;
 
                 // Recipients
-                $mail->setFrom('limvic2019@gmail.com', 'Westprime Horizon Institute');
+                $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
                 $mail->addAddress($email);
                 
                 // Embed logo

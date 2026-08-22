@@ -139,12 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     try {
                         // Server settings
                         $mail->isSMTP();
-                        $mail->Host = 'smtp.gmail.com';
+                        $mail->Host = SMTP_HOST;
                         $mail->SMTPAuth = true;
-                        $mail->Username = 'sample@gmail.com'; // Replace with your Gmail
-                        $mail->Password = 'yourpassword';     // Replace with your Gmail App Password
-                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                        $mail->Port = 587;
+                        $mail->Username = SMTP_USERNAME;
+                        $mail->Password = SMTP_PASSWORD;
+                        $mail->SMTPSecure = SMTP_ENCRYPTION === 'ssl' ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
+                        $mail->Port = SMTP_PORT;
 
                         // Disable SSL verification for local development (XAMPP usually needs this)
                         $mail->SMTPOptions = array(
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         );
 
                         // Recipients
-                        $mail->setFrom('sample@gmail.com', 'Westprime Horizon Institute');
+                        $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
                         $mail->addAddress($request['email'], $request['firstname'] . ' ' . $request['lastname']);
 
                         // Format class for email (remove Block info)
