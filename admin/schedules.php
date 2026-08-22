@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Insert with proper columns including strand_id and section_id
             $stmt = $conn->prepare("INSERT INTO schedules (course_id, strand_id, section_id, school_year, semester, day, time, room, subject, teacher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiisssssi", $p_course_id, $p_strand_id, $section_id, $current_school_year, $semester, $day, $time, $room, $subject, $teacher_id);
+            $stmt->bind_param("iiissssssi", $p_course_id, $p_strand_id, $section_id, $current_school_year, $semester, $day, $time, $room, $subject, $teacher_id);
             
             if ($stmt->execute()) {
                 $redirect_params = [];
