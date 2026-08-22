@@ -83,6 +83,9 @@ CREATE TABLE IF NOT EXISTS schedules (
     teacher_id INT NOT NULL,
     course_id INT NULL,
     strand_id INT NULL,
+    school_year VARCHAR(20) NOT NULL DEFAULT '2025-2026',
+    semester ENUM('1st Semester', '2nd Semester') NOT NULL DEFAULT '1st Semester',
+    quarter ENUM('1st Quarter', '2nd Quarter', '3rd Quarter', '4th Quarter') NOT NULL DEFAULT '1st Quarter',
     subject VARCHAR(100) NOT NULL,
     day VARCHAR(20) NOT NULL, -- e.g., 'Monday', 'MWF'
     time VARCHAR(50) NOT NULL, -- e.g., '9:00 AM - 10:30 AM'

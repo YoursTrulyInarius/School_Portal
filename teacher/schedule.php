@@ -16,7 +16,7 @@ $teacher_sql = "SELECT firstname, lastname FROM teachers WHERE id = '$teacher_id
 $teacher_res = $conn->query($teacher_sql);
 $teacher_info = $teacher_res->fetch_assoc();
 $teacher_fullname = $teacher_info['firstname'] . ' ' . $teacher_info['lastname'];
-
+$current_school_year = get_current_school_year();
 
 // Fetch all schedules for the teacher
 $sql = "SELECT sch.*, 
@@ -228,7 +228,7 @@ $valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
 
                 <!-- Title Bars -->
                 <div class="bar-title bar-yellow">TEACHER'S SCHEDULE</div>
-                <div class="bar-title bar-red">2ND SEMESTER AY 2025-2026</div>
+                <div class="bar-title bar-red"><?php echo htmlspecialchars(strtoupper(get_current_semester_label()) . ' AY ' . get_current_school_year()); ?></div>
                 <div class="bar-title bar-cyan"><?php echo htmlspecialchars($teacher_fullname); ?></div>
 
                 <!-- Table -->

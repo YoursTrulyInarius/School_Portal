@@ -14,4 +14,22 @@ if ($conn->connect_error) {
 
 // Base URL for links
 define('BASE_URL', 'http://localhost/School_Portal/');
+
+function get_current_school_year() {
+    $current_year = (int) date('Y');
+    return ($current_year - 1) . '-' . $current_year;
+}
+
+function get_current_semester_label() {
+    $month = (int) date('n');
+    return ($month >= 1 && $month <= 6) ? '2nd Semester' : '1st Semester';
+}
+
+function get_quarter_options_for_semester($semester) {
+    if ($semester === '2nd Semester') {
+        return ['3rd Quarter', '4th Quarter'];
+    }
+
+    return ['1st Quarter', '2nd Quarter'];
+}
 ?>

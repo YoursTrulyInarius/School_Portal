@@ -11,6 +11,7 @@ if ($_SESSION['role'] !== 'student') {
 }
 
 $student_user_id = $_SESSION['user_id'];
+$current_school_year = get_current_school_year();
 
 // Fetch student info including section
 $student_sql = "SELECT s.*, sec.section_name, sec.grade_level 
@@ -276,8 +277,7 @@ $valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
 
                 <!-- Title Bars -->
                 <div class="bar-title bar-yellow">SUBJECT LOADS</div>
-                <div class="bar-title bar-red">2ND SEMESTER AY 2025-2026</div>
-                <!-- User might want dynamic sem/year later -->
+                <div class="bar-title bar-red"><?php echo htmlspecialchars(strtoupper(get_current_semester_label()) . ' AY ' . $current_school_year); ?></div>
                 <div class="bar-title bar-cyan">
                     <?php echo htmlspecialchars($class_year ? $class_year : 'NO CLASS ASSIGNED'); ?>
                 </div>

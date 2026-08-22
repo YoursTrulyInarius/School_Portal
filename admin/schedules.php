@@ -8,6 +8,7 @@ check_admin();
 
 $success = '';
 $error = '';
+$current_school_year = get_current_school_year();
 
 // Get Filter Parameters
 $course_id = isset($_GET['course_id']) ? clean_input($_GET['course_id']) : '';
@@ -23,18 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $subject = clean_input($_POST['subject']);
         $section_id = clean_input($_POST['section_id']);
         $teacher_id = clean_input($_POST['teacher_id']);
+        $semester = isset($_POST['semester']) && !empty($_POST['semester']) ? clean_input($_POST['semester']) : '1st Semester';
+        $quarter = isset($_POST['quarter']) && !empty($_POST['quarter']) ? clean_input($_POST['quarter']) : (in_array($semester, ['2nd Semester']) ? '3rd Quarter' : '1st Quarter');
         
         // Optional
         $room = clean_input($_POST['room']);
         $p_course_id = isset($_POST['course_id']) && !empty($_POST['course_id']) ? clean_input($_POST['course_id']) : null;
         $p_strand_id = isset($_POST['strand_id']) && !empty($_POST['strand_id']) ? clean_input($_POST['strand_id']) : null;
 
-        if (empty($day) || empty($time) || empty($subject) || empty($section_id) || empty($teacher_id)) {
-            $error = "Please fill in all required fields (Block, Subject, Time, Day, Teacher).";
+        if (empty($day) || empty($time) || empty($subject) || empty($section_id) || empty($teacher_id) || empty($semester) || empty($quarter)) {
+            $error = "Please fill in all required fields (Block, Subject, Time, Day, Teacher, Semester, Quarter).";
         } else {
             // Insert with proper columns including strand_id and section_id
-            $stmt = $conn->prepare("INSERT INTO schedules (course_id, strand_id, section_id, day, time, room, subject, teacher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiissssi", $p_course_id, $p_strand_id, $section_id, $day, $time, $room, $subject, $teacher_id);
+            $stmt = $conn->prepare("INSERT INTO schedules (course_id, strand_id, section_id, school_year, semester, quarter, day, time, room, subject, teacher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iiisssssssi", $p_course_id, $p_strand_id, $section_id, $current_school_year, $semester, $quarter, $day, $time, $room, $subject, $teacher_id);
             
             if ($stmt->execute()) {
                 $redirect_params = [];
@@ -239,6 +242,31 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
                     
                     <div class="form-row">
                         <div class="form-group">
+                            <label>School Year *</label>
+                            <input type="text" class="form-control" value="<?php echo htmlspecialchars($current_school_year); ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Semester *</label>
+                            <select name="semester" id="semester-select" class="form-control" required>
+                                <option value="">Select Semester</option>
+                                <option value="1st Semester">1st Semester</option>
+                                <option value="2nd Semester">2nd Semester</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quarter *</label>
+                            <select name="quarter" id="quarter-select" class="form-control" required>
+                                <option value="">Select Quarter</option>
+                                <option value="1st Quarter">1st Quarter</option>
+                                <option value="2nd Quarter">2nd Quarter</option>
+                                <option value="3rd Quarter">3rd Quarter</option>
+                                <option value="4th Quarter">4th Quarter</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
                             <label>Block / Section *</label>
                             <select name="section_id" class="form-control" required>
                                 <option value="">Select Section</option>
@@ -303,9 +331,11 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
                         <table class="schedule-table">
                             <thead>
                                 <tr>
-                                    <th width="15%">Day</th>
-                                    <th width="20%">Time</th>
-                                    <th width="25%">Subject</th>
+                                    <th width="12%">Day</th>
+                                    <th width="15%">Time</th>
+                                    <th width="18%">Subject</th>
+                                    <th width="15%">Semester</th>
+                                    <th width="15%">Quarter</th>
                                     <th width="15%">Room</th>
                                     <th width="20%">Teacher</th>
                                     <th width="5%"></th>
@@ -317,6 +347,8 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
                                     <td style="font-weight: 500; color: var(--primary);"><?php echo htmlspecialchars($sched['day']); ?></td>
                                     <td><span class="badge badge-time"><?php echo htmlspecialchars($sched['time']); ?></span></td>
                                     <td style="font-weight: 600;"><?php echo htmlspecialchars($sched['subject']); ?></td>
+                                    <td><?php echo htmlspecialchars($sched['semester'] ?? '—'); ?></td>
+                                    <td><?php echo htmlspecialchars($sched['quarter'] ?? '—'); ?></td>
                                     <td><?php echo $sched['room'] ? "<span class='badge badge-room'>".$sched['room']."</span>" : '-'; ?></td>
                                     <td><?php echo htmlspecialchars($sched['lastname'] . ', ' . $sched['firstname']); ?></td>
                                     <td>
@@ -341,6 +373,27 @@ $teachers = $conn->query("SELECT * FROM teachers ORDER BY lastname");
 </div>
 
 <script>
+    const semesterSelect = document.getElementById('semester-select');
+    const quarterSelect = document.getElementById('quarter-select');
+
+    function updateQuarterOptions() {
+        const semester = semesterSelect ? semesterSelect.value : '';
+        const options = semester === '2nd Semester'
+            ? ['3rd Quarter', '4th Quarter']
+            : ['1st Quarter', '2nd Quarter'];
+
+        if (!quarterSelect) return;
+
+        const currentValue = quarterSelect.value;
+        quarterSelect.innerHTML = '<option value="">Select Quarter</option>' + options.map(option => 
+            '<option value="' + option + '"' + (currentValue === option ? ' selected' : '') + '>' + option + '</option>'
+        ).join('');
+    }
+
+    if (semesterSelect) {
+        semesterSelect.addEventListener('change', updateQuarterOptions);
+    }
+
     // SweetAlert for Success
     <?php if (isset($_GET['success'])): ?>
         const type = '<?php echo $_GET['success']; ?>';
